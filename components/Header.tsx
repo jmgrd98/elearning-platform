@@ -101,7 +101,7 @@ const Header = () => {
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
-              <AccordionItem className="w-full flex flex-col gap-2" >
+              <AccordionItem className="w-full flex flex-col gap-2" value="">
                 <AccordionTrigger isLocked>Capítulo 4</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
@@ -109,7 +109,7 @@ const Header = () => {
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
-              <AccordionItem className="w-full flex flex-col gap-2" >
+              <AccordionItem className="w-full flex flex-col gap-2" value="">
                 <AccordionTrigger isLocked>Capítulo 5</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
@@ -117,7 +117,7 @@ const Header = () => {
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
-              <AccordionItem className="w-full flex flex-col gap-2">
+              <AccordionItem className="w-full flex flex-col gap-2" value="">
                 <AccordionTrigger isLocked>Capítulo 6</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
@@ -125,7 +125,7 @@ const Header = () => {
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
-              <AccordionItem className="w-full flex flex-col gap-2">
+              <AccordionItem className="w-full flex flex-col gap-2" value="item-3">
                 <AccordionTrigger isLocked>Capítulo 7</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
