@@ -26,7 +26,7 @@ const page = () => {
     <div className='p-5 text-center flex flex-col items-center'>
       <h1 className='text-5xl font-bold mb-5'>Aula 1</h1>
       {/* <Video width={700} height={450} className='m-0' src={video.url} /> */}
-      <iframe src='https://www.youtube.com/watch?v=iu-LBY7NXD4' width={700} height={400} />
+      <iframe src='https://www.youtube.com/embed?v=iu-LBY7NXD4' width={700} height={400} />
 
       <div className='flex flex-col gap-5 mt-5'>
         <p className='text-xl font-bold'>Tem alguma dúvida sobre essa aula? Compartilhe conosco e iremos te ajudar!</p>
