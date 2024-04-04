@@ -2,9 +2,10 @@
 
 import Video from 'next-video';
 import { useUser } from "@clerk/nextjs"
+import videoURL from '../public/screen-capture.mp4'
 
 const video = {
-  url: '../videos/get-started.mp4.json',
+  url: videoURL,
   // poster: 'https://example.com/poster.jpg',
 };
 
