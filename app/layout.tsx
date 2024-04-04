@@ -21,7 +21,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
       <body className="flex">
-      <Sidebar  />
+      {/* <Sidebar  /> */}
       <main className="w-full flex flex-col">
       <Header/>
         {children}

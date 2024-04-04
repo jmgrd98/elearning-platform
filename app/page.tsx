@@ -1,7 +1,6 @@
 'use client'
 
 import Video from 'next-video';
-import getStarted from '../videos/get-started.mp4.json'
 import { useUser } from "@clerk/nextjs"
 
 const video = {
