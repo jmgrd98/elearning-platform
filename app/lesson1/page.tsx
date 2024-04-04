@@ -4,7 +4,7 @@ import Video from 'next-video'
 import Youtube from 'react-youtube'
 import videoURL from '../../videos/get-started.mp4.json'
 import { Textarea } from '@/components/ui/textarea';
-
+import Iframe from 'react-iframe'
 const video = {
   url: videoURL,
   // poster: 'https://example.com/poster.jpg',
