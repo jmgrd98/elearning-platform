@@ -125,7 +125,7 @@ const Header = () => {
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
-              <AccordionItem className="w-full flex flex-col gap-2" value="item-3">
+              <AccordionItem className="w-full flex flex-col gap-2" value="">
                 <AccordionTrigger isLocked>Capítulo 7</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
