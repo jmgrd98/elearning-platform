@@ -10,7 +10,12 @@ import {
   SheetTrigger,
   SheetClose
 } from "@/components/ui/sheet"
-import Sidebar from '@/components/Sidebar';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "./ui/button";
@@ -19,6 +24,7 @@ import Image from "next/image";
 import logo from '../public/formando_creators_grande_2_copiar.png'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useUser } from "@clerk/nextjs";
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 const Header = () => {
   const router = useRouter();
@@ -59,15 +65,40 @@ const Header = () => {
             </SheetDescription>
           </SheetHeader>
           <div className="flex flex-col gap-3 items-left">
-            <SheetClose>
-              <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 1</Button>
-            </SheetClose>
-            <SheetClose>
-              <Button className="w-full" variant={'secondary'} onClick={() => handleLinkClick('/lesson2')} >Aula 2</Button>
-            </SheetClose>
-            <SheetClose>
-              <Button className="w-full" variant={'secondary'} onClick={() => handleLinkClick('/lesson3')} >Aula 3</Button>
-            </SheetClose>  
+          {/* <ScrollArea className="h-full w-full rounded-md border">  */}
+            <Accordion type="single" collapsible className="w-full text-white">
+              <AccordionItem className="w-full" value="item-1">
+                <AccordionTrigger >Capítulo 1</AccordionTrigger>
+                  <AccordionContent className="w-full">
+                      <SheetClose className="w-full">
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 1</Button>
+                      </SheetClose>
+                      <SheetClose className="w-full">
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 2</Button>
+                      </SheetClose>
+                      <SheetClose className="w-full">
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 1</Button>
+                      </SheetClose>
+                    </AccordionContent>
+              </AccordionItem>
+              <AccordionItem className="w-full" value="item-2">
+                <AccordionTrigger >Capítulo 2</AccordionTrigger>
+                  <AccordionContent className="w-full">
+                      <SheetClose className="w-full">
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 2</Button>
+                      </SheetClose>
+                    </AccordionContent>
+              </AccordionItem>
+              <AccordionItem className="w-full" value="item-3">
+                <AccordionTrigger >Capítulo 3</AccordionTrigger>
+                  <AccordionContent className="w-full">
+                      <SheetClose className="w-full">
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                      </SheetClose>
+                    </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+            {/* </ScrollArea> */}
           </div>
 
           <SheetClose>
