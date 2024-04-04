@@ -1,47 +1,66 @@
 'use client'
 
-import Video from 'next-video'
-import Youtube from 'react-youtube'
+import { Button } from '@/components/ui/button';
 import videoURL from '../../videos/get-started.mp4.json'
 import { Textarea } from '@/components/ui/textarea';
+import { useState } from 'react';
 import Iframe from 'react-iframe'
-const video = {
-  url: videoURL,
-  // poster: 'https://example.com/poster.jpg',
-};
+import { useUser } from '@clerk/nextjs';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-const opts = {
-  height: '390',
-  width: '640',
-  playerVars: {
-    // https://developers.google.com/youtube/player_parameters
-    autoplay: 0,
-  },
-};
+const Page = () => {
+  const {user} = useUser();
+  const [duvidas, setDuvidas] = useState<any>([]);
+  const [newDoubt, setNewDoubt] = useState<string>('');
 
-const videoId = 'https://www.youtube.com/watch?v=iu-LBY7NXD4';
+  // Function to handle submitting a new doubt
+  const handleSubmitDoubt = (newDoubt: any) => {
+    setDuvidas([...duvidas, newDoubt]);
+  };
 
-const page = () => {
   return (
     <div className='p-5 text-center flex flex-col items-center'>
       <h1 className='text-5xl font-bold mb-5'>Aula 1</h1>
-      {/* <Video width={700} height={450} className='m-0' src={video.url} /> */}
-      {/* <iframe width="560" height="315" src="https://www.youtube.com/embed/iu-LBY7NXD4?si=N9TO0blaPMhOH4ZP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> */}
 
-      <Iframe url="https://www.youtube.com/embed/iu-LBY7NXD4?si=N9TO0blaPMhOH4ZP"
+      {/* Embedded YouTube video */}
+      <Iframe
+        url="https://www.youtube.com/embed?v=tPcUszOmU24"
         width="640px"
         height="320px"
         id=""
         className=""
         display="block"
-        position="relative"/>
+        position="relative"
+      />
 
       <div className='flex flex-col gap-5 mt-5'>
         <p className='text-xl font-bold'>Tem alguma dúvida sobre essa aula? Compartilhe conosco e iremos te ajudar!</p>
-        <Textarea placeholder='Compartilhe sua dúvida' className='bg-black/5'/>
+
+        {duvidas.map((duvida: any, index: number) => (
+          <div key={index} className="bg-black/20 p-2 rounded-md flex items-center gap-5">
+            <Avatar>
+              <AvatarImage src={user?.imageUrl} />
+              <AvatarFallback>
+                {user?.firstName?.charAt(0)}
+                {user?.lastName?.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <div className='flex flex-col text-left gap-3'>
+              <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
+              <p className='p-2 rounded'>{duvida}</p>
+            </div>
+          </div>
+        ))}
+
+        <Textarea
+          placeholder='Compartilhe sua dúvida'
+          className='bg-black/20'
+          onChange={(event) => setNewDoubt(event.target.value)}
+        />
+        <Button variant={'purple'} onClick={() => handleSubmitDoubt(newDoubt)}>Enviar dúvida</Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
