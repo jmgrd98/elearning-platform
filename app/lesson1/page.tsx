@@ -1,28 +1,35 @@
 'use client'
 
 import { Button } from '@/components/ui/button';
-import videoURL from '../../videos/get-started.mp4.json'
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Iframe from 'react-iframe'
 import { useUser } from '@clerk/nextjs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {toast, ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { IoIosCloseCircle } from "react-icons/io";
 
 const Page = () => {
   const {user} = useUser();
   const [duvidas, setDuvidas] = useState<any>([]);
   const [newDoubt, setNewDoubt] = useState<string>('');
 
-  // Function to handle submitting a new doubt
-  const handleSubmitDoubt = (newDoubt: any) => {
-    setDuvidas([...duvidas, newDoubt]);
+  const handleSubmitDoubt = () => {
+    if (newDoubt.trim() !== '') {
+      setDuvidas([...duvidas, newDoubt]);
+      toast.success('Obrigado por compartilhar sua dúvida!');
+      setTimeout(() => {
+        toast.success('O professor irá responder assim que possível. 😉');
+      }, 1000)
+      setNewDoubt('');
+    }
   };
 
   return (
     <div className='p-5 text-center flex flex-col items-center'>
       <h1 className='text-5xl font-bold mb-5'>Aula 1</h1>
 
-      {/* Embedded YouTube video */}
       <Iframe
         url="https://www.youtube.com/embed?v=tPcUszOmU24"
         width="640px"
@@ -45,8 +52,11 @@ const Page = () => {
                 {user?.lastName?.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <div className='flex flex-col text-left gap-3'>
-              <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
+            <div className='flex flex-col text-left gap-3 w-full'>
+              <div className='flex items-center justify-between'>
+                <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
+                <IoIosCloseCircle onClick={() => setDuvidas(duvidas.filter((_: any, i: number) => i !== index))} className='text-red-500/80 hover:text-red-500 cursor-pointer w-[25px] h-[25px]' />
+              </div>
               <p className='p-2 rounded'>{duvida}</p>
             </div>
           </div>
@@ -57,8 +67,23 @@ const Page = () => {
           className='bg-black/20'
           onChange={(event) => setNewDoubt(event.target.value)}
         />
-        <Button variant={'purple'} onClick={() => handleSubmitDoubt(newDoubt)}>Enviar dúvida</Button>
+        <Button variant={'purple'} onClick={() => handleSubmitDoubt()}>
+            Enviar dúvida
+        </Button>
+
       </div>
+      <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={true}
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={true}
+                pauseOnHover={true}
+                className={'z-0'}
+            />
     </div>
   );
 };
