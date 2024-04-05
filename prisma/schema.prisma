@@ -32,6 +32,6 @@ model UserSubscription {
 
 model Doubt {
   id String @id @default(uuid())
-  userId String @unique
+  userId String
   content String
 }

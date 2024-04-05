@@ -1,16 +1,16 @@
 import prismadb from "@/lib/prismadb";
 
-export async function POST(req: Request) {
-    const body = await req.json();
-    console.log(body)
+export const POST = async (req: any) => {
     try {
+        const body = await req.json();
         const newDoubt = await prismadb.doubt.create({
             data: {
-                ...body
-            }
+                userId: body.userId,
+                content: body.content,
+            },
         });
         return new Response(JSON.stringify(newDoubt), { status: 201 });
-    } catch (error: any) {
+    } catch (error) {
         return new Response(JSON.stringify(error), { status: 500 });
     }
 }

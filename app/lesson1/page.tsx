@@ -16,10 +16,20 @@ const Page = () => {
   const [duvidas, setDuvidas] = useState<any>([]);
   const [newDoubtText, setNewDoubtText] = useState<string>('');
 
+  useEffect(() => {
+    try {
+      axios.get('/api/doubts').then((response) => {
+        setDuvidas(response.data);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
+
   const handleSubmitDoubt = async () => {
     if (newDoubtText.trim() !== '') {
       try {
-        const response = await axios.post('/api/doubt/new', {
+        const response = await axios.post('/api/doubts/create', {
           userId: user?.id,
           content: newDoubtText,
         })
@@ -36,6 +46,15 @@ const Page = () => {
       }
     }
   };
+
+  const handleDeleteDoubt = async (doubtId: string) => {
+    try {
+      await axios.delete(`/api/doubts/delete/${doubtId}`);
+      setDuvidas(duvidas.filter((doubt: any) => doubt.id !== doubtId));
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className='p-5 text-center flex flex-col items-center'>
@@ -66,7 +85,7 @@ const Page = () => {
             <div className='flex flex-col text-left gap-3 w-full'>
               <div className='flex items-center justify-between'>
                 <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
-                <IoIosCloseCircle onClick={() => setDuvidas(duvidas.filter((_: any, i: number) => i !== index))} className='text-red-500/80 hover:text-red-500 cursor-pointer w-[25px] h-[25px]' />
+                <IoIosCloseCircle onClick={() => handleDeleteDoubt(duvida.id)} className='text-red-500/80 hover:text-red-500 cursor-pointer w-[25px] h-[25px]' />
               </div>
               <p className='p-2 rounded'>{duvida.content}</p>
             </div>
