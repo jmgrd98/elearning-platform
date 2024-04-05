@@ -10,6 +10,15 @@ CREATE TABLE "UserSubscription" (
     CONSTRAINT "UserSubscription_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "Doubt" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "content" TEXT NOT NULL,
+
+    CONSTRAINT "Doubt_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "UserSubscription_userId_key" ON "UserSubscription"("userId");
 
@@ -18,3 +27,6 @@ CREATE UNIQUE INDEX "UserSubscription_stripe_customer_id_key" ON "UserSubscripti
 
 -- CreateIndex
 CREATE UNIQUE INDEX "UserSubscription_stripe_subscription_id_key" ON "UserSubscription"("stripe_subscription_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Doubt_userId_key" ON "Doubt"("userId");

@@ -1,12 +1,6 @@
-import { connectToDB } from "@utils/database";
+import prismadb from "@/lib/prismadb";
 
-export const GET = async (req: any) => {
-    try {
-        await connectToDB();
-
-        const doubts = await Doubt.find({}).populate("creator");
-        return new Response(JSON.stringify(prompts), { status: 200 });
-    } catch (error) {
-        return new Response(JSON.stringify(error), { status: 500 });
-    }
+export const GET = async () => {
+    const doubts = await prismadb.doubt.findMany();
+    return new Response(JSON.stringify(doubts), { status: 200 });
 }
