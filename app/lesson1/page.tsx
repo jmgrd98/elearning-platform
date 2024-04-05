@@ -9,20 +9,31 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { IoIosCloseCircle } from "react-icons/io";
+import axios from 'axios';
 
 const Page = () => {
   const {user} = useUser();
   const [duvidas, setDuvidas] = useState<any>([]);
-  const [newDoubt, setNewDoubt] = useState<string>('');
+  const [newDoubtText, setNewDoubtText] = useState<string>('');
 
-  const handleSubmitDoubt = () => {
-    if (newDoubt.trim() !== '') {
-      setDuvidas([...duvidas, newDoubt]);
-      toast.success('Obrigado por compartilhar sua dúvida!');
-      setTimeout(() => {
-        toast.success('O professor irá responder assim que possível. 😉');
-      }, 1000)
-      setNewDoubt('');
+  const handleSubmitDoubt = async () => {
+    if (newDoubtText.trim() !== '') {
+      try {
+        const response = await axios.post('/api/doubt/new', {
+          userId: user?.id,
+          content: newDoubtText,
+        })
+        const newDoubt = response.data;
+        setDuvidas([...duvidas, newDoubt]);
+        setNewDoubtText('');
+        toast.success('Obrigado por compartilhar sua dúvida!');
+        setTimeout(() => {
+          toast.success('O professor irá responder assim que possível. 😉');
+        }, 1000)
+      } catch (error) {
+        console.error(error);
+        toast.error('Ocorreu um erro ao compartilhar sua dúvida.');
+      }
     }
   };
 
@@ -57,7 +68,7 @@ const Page = () => {
                 <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
                 <IoIosCloseCircle onClick={() => setDuvidas(duvidas.filter((_: any, i: number) => i !== index))} className='text-red-500/80 hover:text-red-500 cursor-pointer w-[25px] h-[25px]' />
               </div>
-              <p className='p-2 rounded'>{duvida}</p>
+              <p className='p-2 rounded'>{duvida.content}</p>
             </div>
           </div>
         ))}
@@ -65,7 +76,7 @@ const Page = () => {
         <Textarea
           placeholder='Compartilhe sua dúvida'
           className='bg-black/20'
-          onChange={(event) => setNewDoubt(event.target.value)}
+          onChange={(event) => setNewDoubtText(event.target.value)}
         />
         <Button variant={'purple'} onClick={() => handleSubmitDoubt()}>
             Enviar dúvida

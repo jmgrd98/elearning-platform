@@ -2,6 +2,7 @@ import prismadb from "@/lib/prismadb";
 
 export async function POST(req: Request) {
     const body = await req.json();
+    console.log(body)
     try {
         const newDoubt = await prismadb.doubt.create({
             data: {
