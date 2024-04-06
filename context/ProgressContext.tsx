@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from 'react';
 
 interface UserProgressContextType {
   progress: number;
-  setProgress: (progress: number) => void;
+  setProgress: (progress: any) => void;
 }
 
 const UserProgressContext = createContext<UserProgressContextType>({
@@ -26,6 +26,6 @@ export const UserProgressProvider: React.FC<{ children: React.ReactNode }> = ({ 
   );
 };
 
-export const useUserProgress = () => {
+export const useUserProgress = (): UserProgressContextType => {
   return useContext(UserProgressContext);
 };

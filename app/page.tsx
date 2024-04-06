@@ -40,7 +40,7 @@ export default function Home() {
   }, []);
 
   const handleVideoEnd = () => {
-    setProgress((prevProgress: any) => prevProgress + 33);
+    setProgress((prevProgress: number) => prevProgress + 33);
   };
 
 

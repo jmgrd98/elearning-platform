@@ -26,13 +26,11 @@ model Lesson {
   id Int @id @default(autoincrement())
   videoUrl String @unique
   isCompleted Boolean
-  doubts Doubt[]
 }
 
 model Doubt {
   id String @id @default(uuid())
   userId String
   aulaId Int
-  aula Lesson @relation(fields: [aulaId], references: [id])
   content String
 }

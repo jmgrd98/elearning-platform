@@ -30,7 +30,6 @@ const Header = () => {
   const router = useRouter();
   const {user} = useUser();
   const [loading, setLoading] = useState(false);
-  // const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   const handleLinkClick = (href: string) => {
     router.push(href);
@@ -73,13 +72,13 @@ const Header = () => {
                   <ScrollArea className="h-[100px] w-full rounded-md border-transparent">
                     <div className='flex flex-col gap-2'>
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 1</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 1</Button>
                       </SheetClose>
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson2')} >Aula 2</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 2</Button>
                       </SheetClose>
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson3')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </div>
                   </ScrollArea>
@@ -89,7 +88,7 @@ const Header = () => {
                 <AccordionTrigger >Capítulo 2</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 2</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 2</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
@@ -97,7 +96,7 @@ const Header = () => {
                 <AccordionTrigger >Capítulo 3</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
@@ -105,7 +104,7 @@ const Header = () => {
                 <AccordionTrigger isLocked>Capítulo 4</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
@@ -113,7 +112,7 @@ const Header = () => {
                 <AccordionTrigger isLocked>Capítulo 5</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
@@ -121,7 +120,7 @@ const Header = () => {
                 <AccordionTrigger isLocked>Capítulo 6</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>
@@ -129,7 +128,7 @@ const Header = () => {
                 <AccordionTrigger isLocked>Capítulo 7</AccordionTrigger>
                   <AccordionContent className="w-full">
                       <SheetClose className="w-full">
-                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/lesson1')} >Aula 3</Button>
+                        <Button className="w-full" type="submit" variant={'secondary'} onClick={() => handleLinkClick('/aula/1')} >Aula 3</Button>
                       </SheetClose>
                     </AccordionContent>
               </AccordionItem>

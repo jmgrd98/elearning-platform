@@ -2,11 +2,15 @@ import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
   apiRoutes: [
-    '/api/doubt',
-    '/api/doubt/new',
+    '/api/doubts',
+    '/api/doubts/create',
+    '/api/doubts/edit',
+    '/api/doubts/delete',
   ],
   publicRoutes: [
-    "/api/doubt/new"
+    "/api/doubts/create",
+    '/api/doubts/edit',
+    '/api/doubts/delete',
   ]
 });
 
