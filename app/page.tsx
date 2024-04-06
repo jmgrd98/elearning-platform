@@ -12,14 +12,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Iframe from 'react-iframe';
 import axios from 'axios';
 
 export default function Home() {
   const { user } = useUser();
   const { progress, setProgress } = useUserProgress();
-  const playerRefs = useRef([]);
-  const [videoId, setVideoId] = useState('');
+  const [videoIds, setVideoIds] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(0), 500);
@@ -28,12 +26,10 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(process.env.YOUTUBE_API_KEY)
       try {
-      const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=the%20weeknd&key=${process.env.YOUTUBE_API_KEY}`);
-        console.log(response.data);
-        const firstVideoId = response.data.items[0].id.videoId;
-        setVideoId(firstVideoId);
+        const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
+        const videoIds = response.data.items.map((item: any) => item.id.videoId);
+        setVideoIds(videoIds);
       } catch (error) {
         console.error(error);
       }
@@ -41,12 +37,6 @@ export default function Home() {
 
     fetchData();
   }, []);
-  
-
-  const handleVideoEnd = (index: number) => {
-    
-  };
-  
 
   return (
     <div className="p-5 text-center flex flex-col gap-10 items-center">
@@ -59,18 +49,15 @@ export default function Home() {
 
       <Carousel >
         <CarouselContent className='max-w-[800px]' >
-          {[1, 2, 3].map((_, index) => (
+          {videoIds.map((videoId, index) => (
             <CarouselItem key={index} className='flex justify-center items-center'>
-              <Iframe
-                url={`https://www.youtube.com/embed/${videoId}`}
-                width="480px"
-                height="240px"
-                id=""
-                className=""
-                display="block"
-                position="relative"
+              <iframe 
+                src={`https://www.youtube.com/embed/${videoId}`}
+                width={480}
+                height={240}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                title={`Video ${index}`}
               />
-              {/* <YoutubePlayer /> */}
             </CarouselItem>
           ))}
         </CarouselContent>
