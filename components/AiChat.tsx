@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from "react"
+import { Input } from "./ui/input";
+import { Textarea } from "./ui/textarea";
 
 const AiChat = () => {
 
@@ -52,11 +54,16 @@ const AiChat = () => {
       };
 
   return (
-    <div className='w-[100px] h-[300px] '>
-      <p>Tire sua dúvida com a inteligência artificial.</p>
+    <div className='w-1/2 h-full max-h-[330px] '>
+      <p className="w-full font-bold">Tire sua dúvida com a inteligência artificial.</p>
 
-      <div className='w-full h-full bg-black/10'>
-
+      <div className='w-full h-full bg-black/10 p-2 rounded'>
+        
+      <Textarea
+          placeholder='Tire sua dúvida'
+          className='bg-black/20'
+          onChange={(event) => setInputValue(event.target.value)}
+        />
       </div>
     </div>
   )

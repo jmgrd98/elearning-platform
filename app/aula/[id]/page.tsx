@@ -14,6 +14,7 @@ import { useParams } from 'next/navigation';
 import { useUserProgress } from '@/context/ProgressContext';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import AiChat from '../../../components/AiChat';
 
 const Page = () => {
   const {user} = useUser();
@@ -101,23 +102,29 @@ const Page = () => {
       <h1 className='text-5xl font-bold mb-5'>Aula {id}</h1>
 
     <div className='flex flex-col gap-3'>
-      <Youtube 
-        videoId={videoId}
-        onEnd={handleVideoEnd}
-        opts={{height: "320", width: "640", }}
-      />
+      <div className='flex items-top gap-5'>
+        <div className='flex flex-col gap-2 mb-2'>
+          <Youtube 
+            videoId={videoId}
+            onEnd={handleVideoEnd}>
+            opts={{height: "320", width: "640", }}
+          </Youtube> 
+          <div className='flex items-center gap-5'>
+            <Button onClick={handlePreviousLesson} variant={'default'} className={id !== '1' ? 'flex items-center w-1/2 gap-3' : 'w-1/2 hidden'}>
+              <p>Aula anterior</p>
+              <FaArrowLeft className='text-white h-5 w-5' />
+            </Button>
 
-      <div className='flex items-center gap-5'>
-          <Button onClick={handlePreviousLesson} variant={'default'} className={id !== '1' ? 'flex items-center w-1/2 gap-3' : 'w-1/2 hidden'}>
-            <p>Aula anterior</p>
-            <FaArrowLeft className='text-white h-5 w-5' />
-          </Button>
-
-        <Button disabled={isButtonDisabled} onClick={handleNextLesson} variant={'default'} className='flex items-center w-1/2 gap-3'>
-          <p>Próxima aula</p>
-          <FaArrowRight className='text-white h-5 w-5' />
-        </Button>
+            <Button disabled={isButtonDisabled} onClick={handleNextLesson} variant={'default'} className='flex items-center w-1/2 gap-3'>
+              <p>Próxima aula</p>
+              <FaArrowRight className='text-white h-5 w-5' />
+            </Button>
+          </div>
+          </div>
+          <AiChat />
       </div>
+
+      
     </div>
 
       <div className='flex flex-col gap-5 mt-5'>
