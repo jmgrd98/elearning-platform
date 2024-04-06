@@ -1,12 +1,6 @@
 'use client'
 
-import Video from 'next-video'
-import videoURL from '../../videos/get-started.mp4.json'
 
-const video = {
-  url: videoURL,
-  // poster: 'https://example.com/poster.jpg',
-};
 
 const page = () => {
   return (
