@@ -3,7 +3,7 @@
 import { Progress } from '../components/ui/progress';
 import { Button } from "@/components/ui/button";
 import { useUserProgress } from "../context/ProgressContext";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useUser } from '@clerk/nextjs';
 import {
   Carousel,
@@ -13,17 +13,34 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Iframe from 'react-iframe';
-import YoutubePlayer from '../components/YoutubePlayer';
+import axios from 'axios';
 
 export default function Home() {
   const { user } = useUser();
   const { progress, setProgress } = useUserProgress();
   const playerRefs = useRef([]);
+  const [videoId, setVideoId] = useState('');
 
   useEffect(() => {
     const timer = setTimeout(() => setProgress(0), 500);
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+      const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=the%20weekend&key=${process.env.YOUTUBE_API_KEY}`);
+        console.log(response.data);
+        const firstVideoId = response.data.items[0].id.videoId;
+        setVideoId(firstVideoId);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  
 
   const handleVideoEnd = (index: number) => {
     
@@ -43,16 +60,16 @@ export default function Home() {
         <CarouselContent className='max-w-[800px]' >
           {[1, 2, 3].map((_, index) => (
             <CarouselItem key={index} className='flex justify-center items-center'>
-              {/* <Iframe
-                url="https://www.youtube.com/embed/9bZkp7q19f0"
+              <Iframe
+                url={`https://www.youtube.com/embed/${videoId}`}
                 width="480px"
                 height="240px"
                 id=""
                 className=""
                 display="block"
                 position="relative"
-              /> */}
-              <YoutubePlayer />
+              />
+              {/* <YoutubePlayer /> */}
             </CarouselItem>
           ))}
         </CarouselContent>
