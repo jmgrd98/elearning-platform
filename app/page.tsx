@@ -28,8 +28,9 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log(process.env.YOUTUBE_API_KEY)
       try {
-      const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=the%20weekend&key=${process.env.YOUTUBE_API_KEY}`);
+      const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=the%20weeknd&key=${process.env.YOUTUBE_API_KEY}`);
         console.log(response.data);
         const firstVideoId = response.data.items[0].id.videoId;
         setVideoId(firstVideoId);
