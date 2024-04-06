@@ -13,6 +13,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import axios from 'axios';
+import YouTube from 'react-youtube';
 
 export default function Home() {
   const { user } = useUser();
@@ -38,6 +39,11 @@ export default function Home() {
     fetchData();
   }, []);
 
+  const handleVideoEnd = () => {
+    setProgress(100);
+  };
+
+
   return (
     <div className="p-5 text-center flex flex-col gap-10 items-center">
       <h1 className='text-5xl font-bold'>Olá, {user?.firstName}!</h1>
@@ -51,11 +57,10 @@ export default function Home() {
         <CarouselContent className='max-w-[800px]' >
           {videoIds.map((videoId, index) => (
             <CarouselItem key={index} className='flex justify-center items-center'>
-              <iframe 
-                src={`https://www.youtube.com/embed/${videoId}`}
-                width={480}
-                height={240}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              <YouTube 
+                videoId={videoId}
+                onEnd={handleVideoEnd}
+                opts={{height: "240", width: "480", playerVars: { autoplay: 1 }}}
                 title={`Video ${index}`}
               />
             </CarouselItem>
