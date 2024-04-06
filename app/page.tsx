@@ -40,7 +40,7 @@ export default function Home() {
   }, []);
 
   const handleVideoEnd = () => {
-    setProgress(100);
+    setProgress((prevProgress: any) => prevProgress + 33);
   };
 
 
@@ -60,7 +60,7 @@ export default function Home() {
               <YouTube 
                 videoId={videoId}
                 onEnd={handleVideoEnd}
-                opts={{height: "240", width: "480", playerVars: { autoplay: 1 }}}
+                opts={{height: "240", width: "480", }}
                 title={`Video ${index}`}
               />
             </CarouselItem>

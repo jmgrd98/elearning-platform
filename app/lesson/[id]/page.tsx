@@ -10,9 +10,11 @@ import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { IoIosCloseCircle } from "react-icons/io";
 import axios from 'axios';
+import { useParams } from 'next/navigation';
 
 const Page = () => {
   const {user} = useUser();
+  const { id } = useParams();
   const [duvidas, setDuvidas] = useState<any>([]);
   const [newDoubtText, setNewDoubtText] = useState<string>('');
 
@@ -58,7 +60,7 @@ const Page = () => {
 
   return (
     <div className='p-5 text-center flex flex-col items-center'>
-      <h1 className='text-5xl font-bold mb-5'>Aula 1</h1>
+      <h1 className='text-5xl font-bold mb-5'>Aula {id}</h1>
 
       <Iframe
         url="https://www.youtube.com/embed?v=tPcUszOmU24"
