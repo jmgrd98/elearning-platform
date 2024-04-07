@@ -6,12 +6,12 @@ import { Button } from "./ui/button";
 
 const AiChat = () => {
     const [inputValue, setInputValue] = useState('');
-    const [chatHistory, setChatHistory] = useState<string[]>([]); // Array to store chat history
-    const [displayedMessage, setDisplayedMessage] = useState<string>(''); // Message currently being displayed
-    const [typingEffectIndex, setTypingEffectIndex] = useState<number>(0); // Index for the typing effect
+    const [chatHistory, setChatHistory] = useState<string[]>([]);
+    const [displayedMessage, setDisplayedMessage] = useState<string>('');
+    const [typingEffectIndex, setTypingEffectIndex] = useState<number>(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        // Start typing effect when chat history changes
         if (typingEffectIndex < chatHistory.length) {
             startTypingEffect();
         }
@@ -28,6 +28,7 @@ const AiChat = () => {
     }
 
     const getMessages = async () => {
+        setIsLoading(true);
         const apiKey = process.env.OPENAI_API_KEY
     
         const options = {
@@ -52,16 +53,15 @@ const AiChat = () => {
             const response = await fetch('\n' + 'https://api.openai.com/v1/chat/completions', options);
             const data = await response.json();
             const newMessage = data.choices[0].message.content;
-            // Update chat history with the new message
             setChatHistory(prevHistory => [...prevHistory, newMessage]);
         } catch (error) {
             console.error(error);
         } finally {
             setInputValue('');
+            setIsLoading(false);
         }
     };
 
-    // Function to start the typing effect
     const startTypingEffect = () => {
         let currentIndex = 0;
         const interval = setInterval(() => {
@@ -70,9 +70,9 @@ const AiChat = () => {
                 currentIndex++;
             } else {
                 clearInterval(interval);
-                setTypingEffectIndex(prevIndex => prevIndex + 1); // Move to the next message
+                setTypingEffectIndex(prevIndex => prevIndex + 1);
             }
-        }, 50); // Adjust typing speed as needed
+        }, 50);
     };
 
     return (
@@ -90,7 +90,7 @@ const AiChat = () => {
                         onChange={(e: any) => handleInputChange(e)}
                         onKeyPress={(e: any) => handleKeyPress(e)}
                     />
-                    <Button variant={'purple'} onClick={getMessages}>Enviar</Button>
+                    <Button variant={'purple'} onClick={getMessages}>{isLoading ? 'Enviando...' : 'Enviar'}</Button>
                 </div>
             </div>
         </div>

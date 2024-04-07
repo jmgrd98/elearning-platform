@@ -22,15 +22,17 @@ const Page = () => {
   const { progress, setProgress } = useUserProgress();
   const router = useRouter();
 
-  const [duvidas, setDuvidas] = useState<any>([]);
+  const [duvidas, setDuvidas] = useState<any[]>([]);
   const [newDoubtText, setNewDoubtText] = useState<string>('');
   const [videoId, setVideoId] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     try {
       axios.get('/api/doubts').then((response) => {
-        setDuvidas(response.data);
+        const filteredDuvidas = response.data.filter((duvida: any) => duvida.aulaId === id);
+        setDuvidas(filteredDuvidas);
       });
     } catch (error) {
       console.error(error);
@@ -67,6 +69,7 @@ const Page = () => {
   };
 
   const handleSubmitDoubt = async () => {
+    setIsLoading(true);
     if (newDoubtText.trim() !== '') {
       try {
         const response = await axios.post('/api/doubts/create', {
@@ -76,7 +79,6 @@ const Page = () => {
         });
         const newDoubt = response.data;
         setDuvidas([...duvidas, newDoubt]);
-        setNewDoubtText('');
         toast.success('Obrigado por compartilhar sua dúvida!');
         setTimeout(() => {
           toast.success('O professor irá responder assim que possível. 😉');
@@ -84,6 +86,9 @@ const Page = () => {
       } catch (error) {
         console.error(error);
         toast.error('Ocorreu um erro ao compartilhar sua dúvida.');
+      } finally {
+        setNewDoubtText('');
+        setIsLoading(false);
       }
     }
   };
@@ -150,12 +155,13 @@ const Page = () => {
         ))}
 
         <Textarea
+          value={newDoubtText}
           placeholder='Compartilhe sua dúvida'
           className='bg-black/20'
           onChange={(event) => setNewDoubtText(event.target.value)}
         />
         <Button variant={'purple'} onClick={() => handleSubmitDoubt()}>
-            Enviar dúvida
+        {isLoading ? 'Enviando...' : 'Enviar dúvida'}
         </Button>
 
       </div>
