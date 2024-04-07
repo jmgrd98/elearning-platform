@@ -87,8 +87,8 @@ const AiChat = () => {
                         placeholder='Tire sua dúvida'
                         className='bg-black/20'
                         value={inputValue}
-                        onChange={handleInputChange}
-                        onKeyPress={handleKeyPress}
+                        onChange={() => handleInputChange}
+                        onKeyPress={() => handleKeyPress}
                     />
                     <Button variant={'purple'} onClick={getMessages}>Enviar</Button>
                 </div>
