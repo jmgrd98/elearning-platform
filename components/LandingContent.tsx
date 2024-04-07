@@ -3,6 +3,9 @@
 import Logo from "./Logo";
 import luide from '../public/luide.jpg';
 import Image from "next/image";
+import { FaYoutube } from "react-icons/fa";
+import { RiInstagramFill } from "react-icons/ri";
+import Link from "next/link";
 
 const LandingContent = () => {
   return (
@@ -25,6 +28,16 @@ const LandingContent = () => {
           <p className="text-lg">Trabalho de forma ininterrupta desde então. Blogs, newsletters, lives, podcasts e Youtube. Escrevo, gravo e apresento.</p>
           <p className="text-lg">Comigo você aprende conteúdo de verdade.</p>
           <p className="text-lg">Dúvidas? Acesse minhas redes.</p>
+
+          <div className='flex items-center gap-2'>
+            <Link target="_blank" href="https://www.youtube.com/luideverso">
+              <FaYoutube className="w-10 h-10 text-red-500 hover:text-red-500/70 cursor-pointer" />
+            </Link>
+            <Link target="_blank" href='https://www.instagram.com/LUIDE/'>
+              <RiInstagramFill className="w-10 h-10 text-pink-500 hover:text-pink-500/70 cursor-pointer"/>
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>
