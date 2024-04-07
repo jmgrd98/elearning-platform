@@ -27,9 +27,19 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const options = {
+        method: 'GET',
+        url: 'https://yt-api.p.rapidapi.com/search',
+        params: {query: 'luide%20comunismo'},
+        headers: {
+          'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
+          'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
+        }
+      };
       try {
-        const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
-        const videoIds = response.data.items.map((item: any) => item.id.videoId);
+        // const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
+        const response = await axios.request(options);
+        const videoIds = response.data.data.map((item: any) => item.videoId);
         setVideoIds(videoIds);
       } catch (error) {
         console.error(error);

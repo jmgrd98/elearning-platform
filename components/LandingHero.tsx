@@ -14,30 +14,30 @@ const LandingHero = () => {
     const [videoId, setVideoId] = useState('');
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-          const options = {
-            method: 'GET',
-            url: 'https://yt-api.p.rapidapi.com/search',
-            params: {query: 'luide%20comunismo'},
-            headers: {
-              'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
-              'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
-            }
-          };
-          try {
-            // const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
-            const response = await axios.request(options);
-            const videoId = response.data.data[0].videoId;
-            console.log(response.data.data[0].videoId)
-            setVideoId(videoId);
-          } catch (error) {
-            console.error(error);
-          }
-        };
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       const options = {
+    //         method: 'GET',
+    //         url: 'https://yt-api.p.rapidapi.com/search',
+    //         params: {query: 'luide%20estrategia%20funil%20conteudo'},
+    //         headers: {
+    //           'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
+    //           'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
+    //         }
+    //       };
+    //       try {
+    //         // const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
+    //         const response = await axios.request(options);
+    //         const videoId = response.data.data[0].videoId;
+    //         console.log(response.data.data[0].videoId)
+    //         setVideoId(videoId);
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     };
     
-        fetchData();
-      }, []);
+    //     fetchData();
+    //   }, []);
 
       const onSubscribe = async () => {
         try {
@@ -56,7 +56,8 @@ const LandingHero = () => {
     <div className='bg-black w-full flex flex-col items-center gap-5 mb-5'>
         <Logo width={450} height={450} />
         <YouTube 
-                videoId={videoId}
+
+                videoId={'xrCcO_YNVCc'}
                 opts={{ height: "320", width: "640" }}
             />
         <div className="bg-clip-text text-6xl font-extrabold text-white my-5">
