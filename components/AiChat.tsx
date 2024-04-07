@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 const AiChat = () => {
 
     const [inputValue, setInputValue] = useState('');
-    const [message, setMessage] = useState<string>('');
+    const [message, setMessage] = useState<string[]>([]);
     const [value, setValue] = useState('');
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +45,9 @@ const AiChat = () => {
         try {
             const response = await fetch('\n' + 'https://api.openai.com/v1/chat/completions', options);
             const data = await response.json();
-            setMessage(data.choices[0].message.content);
+            const message = data.choices[0].message.content;
+            setMessage(message);
+            console.log(message)
             setValue(inputValue);
         } catch (error) {
             console.error(error);
@@ -59,9 +61,10 @@ const AiChat = () => {
             <p className="w-full font-bold">Tire sua dúvida com a inteligência artificial.</p>
             <div className='flex flex-col gap-2 w-full h-full bg-black/10 p-2 rounded justify-between'>
             <Typewriter 
-                words={[message]}
+                words={message}
                 typeSpeed={20}
             />
+            {/* <p>{messages}</p> */}
                 <div className='flex flex-col gap-2'>
                     <Textarea
                         placeholder='Tire sua dúvida'

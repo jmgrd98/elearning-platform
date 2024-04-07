@@ -10,7 +10,7 @@ export const POST = async (req: any) => {
     try {
         const { userId, content, aulaId } = await req.json();
         
-        const data: DoubtCreateInput = {
+        const data: any = {
             userId,
             content,
             aulaId
