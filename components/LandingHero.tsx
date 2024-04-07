@@ -1,13 +1,12 @@
 'use client'
 
 import React from 'react'
-import Image from 'next/image'
 import TypewriterComponent from 'typewriter-effect'
 import YouTube from 'react-youtube'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Button } from './ui/button'
-import logo from '../public/formando_creators_grande_2_copiar.png';
+import Logo from './Logo'
 
 
 const LandingHero = () => {
@@ -28,7 +27,7 @@ const LandingHero = () => {
       }, []);
   return (
     <div className='bg-black w-full flex flex-col items-center gap-5'>
-      <Image src={logo} alt="Logo" width={450} height={450} />
+      <Logo width={450} height={450} />
     <YouTube 
             videoId={videoId}
             opts={{ height: "320", width: "640" }}
