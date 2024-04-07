@@ -3,7 +3,7 @@ import prismadb from "@/lib/prismadb";
 interface DoubtCreateInput {
     userId: string;
     content: string;
-    aulaId: number;
+    aulaId: string;
 }
 
 export const POST = async (req: any) => {

@@ -104,11 +104,11 @@ const Page = () => {
     <div className='flex flex-col gap-3'>
       <div className='flex items-top gap-5'>
         <div className='flex flex-col gap-2 mb-2'>
-          <Youtube 
+        <Youtube 
             videoId={videoId}
-            onEnd={handleVideoEnd}>
-            opts={{height: "320", width: "640", }}
-          </Youtube> 
+            onEnd={handleVideoEnd}
+            opts={{ height: "320", width: "640" }}
+          />
           <div className='flex items-center gap-5'>
             <Button onClick={handlePreviousLesson} variant={'default'} className={id !== '1' ? 'flex items-center w-1/2 gap-3' : 'w-1/2 hidden'}>
               <p>Aula anterior</p>

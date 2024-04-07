@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from "react"
-import { Input } from "./ui/input";
+import { useState } from "react";
+import { Typewriter } from 'react-simple-typewriter';
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 
@@ -45,9 +45,7 @@ const AiChat = () => {
         try {
             const response = await fetch('\n' + 'https://api.openai.com/v1/chat/completions', options);
             const data = await response.json();
-            console.log(data)
             setMessage(data.choices[0].message.content);
-            // console.log(message)
             setValue(inputValue);
         } catch (error) {
             console.error(error);
@@ -59,16 +57,21 @@ const AiChat = () => {
     return (
         <div className='w-1/2 h-full max-h-[330px] '>
             <p className="w-full font-bold">Tire sua dúvida com a inteligência artificial.</p>
-            <div className='flex flex-col gap-2 w-full h-full bg-black/10 p-2 rounded'>
-            <p>{message}</p>
-                <Textarea
-                    placeholder='Tire sua dúvida'
-                    className='bg-black/20'
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
-                />
-                <Button variant={'purple'} onClick={getMessages}>Enviar</Button>
+            <div className='flex flex-col gap-2 w-full h-full bg-black/10 p-2 rounded justify-between'>
+            <Typewriter 
+                words={[message]}
+                typeSpeed={20}
+            />
+                <div className='flex flex-col gap-2'>
+                    <Textarea
+                        placeholder='Tire sua dúvida'
+                        className='bg-black/20'
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        onKeyPress={handleKeyPress}
+                    />
+                    <Button variant={'purple'} onClick={getMessages}>Enviar</Button>
+                </div>
             </div>
         </div>
     )

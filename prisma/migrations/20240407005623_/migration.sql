@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Doubt" ALTER COLUMN "aulaId" SET DATA TYPE TEXT;
