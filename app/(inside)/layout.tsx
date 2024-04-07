@@ -9,7 +9,7 @@ export default function RootLayout({
 }>) {
   return (
     <UserProgressProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en">
           <body className="flex">
           <main className="w-full flex flex-col">
           <Header/>
