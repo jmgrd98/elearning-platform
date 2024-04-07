@@ -8,6 +8,8 @@ export default authMiddleware({
     '/api/doubts/delete',
   ],
   publicRoutes: [
+    '/',
+    '/api/doubts',
     "/api/doubts/create",
     '/api/doubts/edit',
     '/api/doubts/delete',

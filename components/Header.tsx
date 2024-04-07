@@ -25,6 +25,7 @@ import logo from '../public/formando_creators_grande_2_copiar.png'
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useUser } from "@clerk/nextjs";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { UserButton } from "@clerk/nextjs";
 
 const Header = () => {
   const router = useRouter();
@@ -142,7 +143,7 @@ const Header = () => {
 
         </SheetContent>
         </Sheet>
-          <UserAvatar/>
+        <UserButton afterSignOutUrl="/"/>
       </div>
     </>
   )

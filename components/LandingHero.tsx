@@ -27,30 +27,30 @@ const LandingHero = () => {
       }, []);
   return (
     <div className='bg-black w-full flex flex-col items-center gap-5'>
-      <Logo width={450} height={450} />
-    <YouTube 
-            videoId={videoId}
-            opts={{ height: "320", width: "640" }}
-          />
-    <div className="bg-clip-text text-4xl font-extrabold text-white">
-      <TypewriterComponent 
-                options={{
-                    strings: [
-                        "Redes sociais",
-                        "Algoritmos",
-                        "Monetização",
-                        "Vendas",
-                    ],
-                    autoStart: true,
-                    loop: true
-                }}
+        <Logo width={450} height={450} />
+        <YouTube 
+                videoId={videoId}
+                opts={{ height: "320", width: "640" }}
             />
-    </div>
-        {/* <Link > */}
-            <Button variant={'purple'} className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
-                QUERO ME INSCREVER AGORA!
-            </Button>
-        {/* </Link> */}
+        <div className="bg-clip-text text-6xl font-extrabold text-white">
+        <TypewriterComponent 
+                    options={{
+                        strings: [
+                            "Redes sociais",
+                            "Algoritmos",
+                            "Monetização",
+                            "Vendas",
+                        ],
+                        autoStart: true,
+                        loop: true
+                    }}
+                />
+        </div>
+            {/* <Link > */}
+                <Button variant={'purple'} className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
+                    QUERO ME INSCREVER AGORA!
+                </Button>
+            {/* </Link> */}
     </div>
   )
 }
