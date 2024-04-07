@@ -1,12 +1,6 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ClerkProvider } from '@clerk/nextjs'
 
-export const metadata: Metadata = {
-  title: "Kreator",
-  description: "eLearning platform",
-};
+import Header from "@/components/Header";
+import { UserProgressProvider } from "@/context/ProgressContext";
 
 export default function RootLayout({
   children,
@@ -14,14 +8,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <UserProgressProvider>
       <html lang="en" suppressHydrationWarning>
           <body className="flex">
           <main className="w-full flex flex-col">
+          <Header/>
             {children}
           </main>
         </body>
       </html>
-    </ClerkProvider>
+    </UserProgressProvider>
   );
 }

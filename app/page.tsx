@@ -1,76 +1,63 @@
 'use client'
 
-import { Progress } from '../components/ui/progress';
+import { useAuth } from "@clerk/nextjs"
+import Link from "next/link"
+import Image from "next/image";
+import TypewriterComponent from 'typewriter-effect';
 import { Button } from "@/components/ui/button";
-import { useUserProgress } from "../context/ProgressContext";
-import { useEffect, useRef, useState } from 'react';
-import { useUser } from '@clerk/nextjs';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import axios from 'axios';
+import logo from '../public/formando_creators_grande_2_copiar.png';
 import YouTube from 'react-youtube';
-
-export default function Home() {
-  const { user } = useUser();
-  const { progress, setProgress } = useUserProgress();
-  const [videoIds, setVideoIds] = useState([]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setProgress(0), 500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
-        const videoIds = response.data.items.map((item: any) => item.id.videoId);
-        setVideoIds(videoIds);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleVideoEnd = () => {
-    setProgress((prevProgress: number) => prevProgress + 33);
-  };
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 
+const page = () => {
+    const { isSignedIn } = useAuth();
+
+    const [videoId, setVideoId] = useState('');
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
+            const videoId = response.data.items[0].id.videoId;
+            setVideoId(videoId);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
   return (
-    <div className="p-5 text-center flex flex-col gap-10 items-center">
-      <h1 className='text-5xl font-bold'>Olá, {user?.firstName}!</h1>
-
-      <div className="flex flex-col gap-3 w-full items-center">
-        <p className="text-2xl font-bold">Esse é o seu progresso no curso</p>
-        <Progress value={progress} className="w-[60%]" />
-      </div>
-
-      <Carousel >
-        <CarouselContent className='max-w-[800px]' >
-          {videoIds.map((videoId, index) => (
-            <CarouselItem key={index} className='flex justify-center items-center'>
-              <YouTube 
-                videoId={videoId}
-                onEnd={handleVideoEnd}
-                opts={{height: "240", width: "480", }}
-                title={`Video ${index}`}
-              />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-
-      <Button variant={'purple'}>Continuar de onde parei</Button>
+    <div className="flex flex-col items-center justify-center gap-5 h-screen bg-black text-white">
+    <Image src={logo} alt="Logo" width={450} height={450} />
+    <YouTube 
+            videoId={videoId}
+            opts={{ height: "320", width: "640" }}
+          />
+    <div className="bg-clip-text text-4xl font-extrabold">
+      <TypewriterComponent 
+                options={{
+                    strings: [
+                        "Redes sociais",
+                        "Algoritmos",
+                        "Monetização",
+                        "Vendas",
+                    ],
+                    autoStart: true,
+                    loop: true
+                }}
+            />
     </div>
-  );
+        <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
+            <Button variant={'purple'} className='md:text-lg p-4 md:p-6 rounded-full font-semibold'>
+                QUERO ME INSCREVER AGORA!
+            </Button>
+        </Link>
+    </div>
+  )
 }
+
+export default page

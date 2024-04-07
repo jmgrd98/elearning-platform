@@ -14,7 +14,7 @@ import { useParams } from 'next/navigation';
 import { useUserProgress } from '@/context/ProgressContext';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-import AiChat from '../../../components/AiChat';
+import AiChat from '../../../../components/AiChat';
 
 const Page = () => {
   const {user} = useUser();
@@ -37,7 +37,7 @@ const Page = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [])
+  }, [id])
 
   useEffect(() => {
     const fetchData = async () => {
