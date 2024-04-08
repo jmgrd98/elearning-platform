@@ -153,19 +153,37 @@ const Page = () => {
             </Button>
           </div>
           </div>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger className='absolute top-20 right-10' asChild>
-                <Button variant={'purple'} className='rounded-full p-3 cursor-pointer'>
-                  <HiSparkles className='text-white w-5 h-5'/>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side={"left"}>
-                <p>Tire sua dúvida com o Luide AI! 🤖</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          {/* <AiChat /> */}
+
+          <div className='absolute top-20 right-10'>
+
+            <TooltipProvider>
+              <Dialog>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                  <DialogTrigger asChild>
+                    <Button variant={'purple'} className='rounded-full p-3 cursor-pointer'>
+                      <HiSparkles className='text-white w-5 h-5'/>
+                    </Button>
+                    </DialogTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent side={"left"}>
+                    <p>Tire sua dúvida com o Luide AI! 🤖</p>
+                  </TooltipContent>
+                </Tooltip>
+                  <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+                    <DialogHeader>
+                      <DialogTitle>Tire sua dúvida com o Luide AI! 🤖</DialogTitle>
+                      <DialogDescription>
+                        <AiChat/>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+              </Dialog>
+            </TooltipProvider>
+
+
+          </div>
+
       </div>
 
       
