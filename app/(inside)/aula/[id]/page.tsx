@@ -15,6 +15,21 @@ import { useUserProgress } from '@/context/ProgressContext';
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import AiChat from '../../../../components/AiChat';
+import { HiSparkles } from "react-icons/hi2";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Page = () => {
   const {user} = useUser();
@@ -114,7 +129,9 @@ const Page = () => {
 
   return (
     <div className='p-5 text-center flex flex-col items-center'>
-      <h1 className='text-5xl font-bold mb-5'>Aula {id}</h1>
+      <div className='flex items-center'>
+        <h1 className='text-5xl font-bold mb-5'>Aula {id}</h1>
+      </div>
 
     <div className='flex flex-col gap-3'>
       <div className='flex items-top gap-5'>
@@ -136,7 +153,19 @@ const Page = () => {
             </Button>
           </div>
           </div>
-          <AiChat />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger className='absolute top-20 right-10' asChild>
+                <Button variant={'purple'} className='rounded-full p-3 cursor-pointer'>
+                  <HiSparkles className='text-white w-5 h-5'/>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent side={"left"}>
+                <p>Tire sua dúvida com o Luide AI! 🤖</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          {/* <AiChat /> */}
       </div>
 
       
