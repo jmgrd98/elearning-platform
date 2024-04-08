@@ -166,13 +166,13 @@ const Page = () => {
                     </Button>
                     </DialogTrigger>
                   </TooltipTrigger>
-                  <TooltipContent side={"left"}>
+                  <TooltipContent side={"left"} className='mb-10'>
                     <p>Tire sua dúvida com o Luide AI! 🤖</p>
                   </TooltipContent>
                 </Tooltip>
-                  <DialogContent onCloseAutoFocus={(e) => e.preventDefault()}>
+                  <DialogContent className='h-full max-h-[600px]' onCloseAutoFocus={(e) => e.preventDefault()}>
                     <DialogHeader>
-                      <DialogTitle>Tire sua dúvida com o Luide AI! 🤖</DialogTitle>
+                      <DialogTitle className='mb-5'>Tire sua dúvida com o Luide AI! 🤖</DialogTitle>
                       <DialogDescription>
                         <AiChat/>
                       </DialogDescription>

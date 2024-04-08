@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import luide from '../public/luide.jpg';
+import Image from "next/image";
 
 const AiChat = () => {
     const [inputValue, setInputValue] = useState('');
@@ -42,7 +44,10 @@ const AiChat = () => {
                 messages: [
                     {
                         role: 'user',
-                        content: inputValue
+                        content: `Aja como o youtuber e streamer brasileiro Luide Matos.
+                                 Luide ensina pessoas a criarem conteúdo na internet e desenvolver uma carreira baseada nisso, vendendo produtos digitais etc.
+                                 Fale como o Luide fala, ele é bem próximo de sua audiência.
+                                 Falando como se fosse o Luide e sem sair do personagem, responda a seguinte pergunta: ${inputValue}`
                     }
                 ],
                 max_tokens: 100
@@ -72,14 +77,17 @@ const AiChat = () => {
                 clearInterval(interval);
                 setTypingEffectIndex(prevIndex => prevIndex + 1);
             }
-        }, 50);
+        }, 20);
     };
 
     return (
-        <div className='w-1/2 h-full max-h-[330px] '>
-            <p className="w-full font-bold">Tire sua dúvida com a inteligência artificial.</p>
+        <div className='w-full h-full max-h-[330px] flex flex-col justify-between '>
             <div className='flex flex-col gap-2 w-full h-full bg-black/10 p-2 rounded justify-between'>
                 <div className="flex flex-col gap-1">
+                    <div className='flex items-center gap-3'>
+                        <Image src={luide} alt="Luide" width={50} height={50} className="rounded-full" />
+                        <p className='text-xl font-bold text-black'>Luide Matos</p>
+                    </div>
                     <p className="text-black">{displayedMessage}</p>
                 </div>
                 <div className='flex flex-col gap-2'>
@@ -90,9 +98,9 @@ const AiChat = () => {
                         onChange={(e: any) => handleInputChange(e)}
                         onKeyPress={(e: any) => handleKeyPress(e)}
                     />
-                    <Button variant={'purple'} onClick={getMessages}>{isLoading ? 'Enviando...' : 'Enviar'}</Button>
                 </div>
             </div>
+            <Button className="mt-5 w-full" variant={'purple'} onClick={getMessages}>{isLoading ? 'Enviando...' : 'Enviar'}</Button>
         </div>
     )
 }
