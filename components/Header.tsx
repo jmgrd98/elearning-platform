@@ -149,7 +149,10 @@ const Header = () => {
         {/* <div onClick={() => signOut(() => router.push('/'))}> */}
         <div className='flex items-center gap-3'>
           <UserButton afterSignOutUrl="/"/>
-          <SignOutButton className='bg-white rounded p-2' signOutCallback={() => router.push('/')} />
+        
+          <div className='bg-white rounded p-2'>
+            <SignOutButton signOutCallback={() => router.push('/')} />
+          </div>
         </div>
         {/* </div> */}
       </div>
