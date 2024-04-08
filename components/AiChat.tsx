@@ -14,6 +14,11 @@ const AiChat = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setDisplayedMessage('Fala creator! Aqui é o Luide, em que posso ajudar?');
+        startTypingEffect();
+    }, [])
+
+    useEffect(() => {
         if (typingEffectIndex < chatHistory.length) {
             startTypingEffect();
         }
@@ -46,11 +51,15 @@ const AiChat = () => {
                         role: 'user',
                         content: `Aja como o youtuber e streamer brasileiro Luide Matos.
                                  Luide ensina pessoas a criarem conteúdo na internet e desenvolver uma carreira baseada nisso, vendendo produtos digitais etc.
-                                 Fale como o Luide fala, ele é bem próximo de sua audiência.
-                                 Falando como se fosse o Luide e sem sair do personagem, responda a seguinte pergunta: ${inputValue}`
+                                 Fale como o Luide fala, ele é bem próximo de sua audiência e às vezes um pouco sarcástico.
+                                 Ele é de esquerda politicamente e gosta de cozinhar comer e tomar uma cerveja.
+                                 Luide tem uma filha que ele ama bastante chamada Alice.
+                                 Luide gosta de monogamia.
+                                 Luide é criador de conteúdo na internet há mais de 10 anos, ele tem muita experiência na área de marketing digital.
+                                 Falando como se fosse o Luide e sem sair do personagem, responda a seguinte pergunta e estruture o seu texto de resposta em parágrafos para uma melhor experiência de leitura do usuário: ${inputValue}`
                     }
                 ],
-                max_tokens: 100
+                max_tokens: 500
             })
         }
     
@@ -68,10 +77,21 @@ const AiChat = () => {
     };
 
     const startTypingEffect = () => {
+        if (typingEffectIndex >= chatHistory.length) {
+            return;
+        }
+    
         let currentIndex = 0;
         const interval = setInterval(() => {
-            if (currentIndex <= chatHistory[typingEffectIndex].length) {
-                setDisplayedMessage(chatHistory[typingEffectIndex].slice(0, currentIndex));
+            const currentMessage = chatHistory[typingEffectIndex];
+            if (!currentMessage) {
+                clearInterval(interval);
+                setTypingEffectIndex(prevIndex => prevIndex + 1);
+                return;
+            }
+    
+            if (currentIndex <= currentMessage.length) {
+                setDisplayedMessage(currentMessage.slice(0, currentIndex));
                 currentIndex++;
             } else {
                 clearInterval(interval);
@@ -79,12 +99,13 @@ const AiChat = () => {
             }
         }, 20);
     };
+    
 
     return (
-        <div className='w-full h-full max-h-[330px] flex flex-col justify-between '>
-            <div className='flex flex-col gap-2 w-full h-full bg-black/10 p-2 rounded justify-between'>
-                <div className="flex flex-col gap-1">
-                    <div className='flex items-center gap-3'>
+        <div className='w-full h-screen max-h-[330px] flex flex-col justify-between '>
+            <div className='flex flex-col gap-2 w-full min-h-[450px] bg-black/10 p-2 rounded justify-between'>
+                <div className="flex flex-col gap-1 overflow-y-scroll">
+                    <div className='flex items-center gap-3 mb-2'>
                         <Image src={luide} alt="Luide" width={50} height={50} className="rounded-full" />
                         <p className='text-xl font-bold text-black'>Luide Matos</p>
                     </div>
