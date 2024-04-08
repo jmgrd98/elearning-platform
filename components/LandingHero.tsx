@@ -8,9 +8,13 @@ import axios from 'axios'
 import { Button } from './ui/button'
 import Logo from './Logo'
 import { Separator } from './ui/separator'
-
+import { useAuth } from '@clerk/nextjs'
+import Link from 'next/link'
 
 const LandingHero = () => {
+
+    const isSignedIn = useAuth()
+
     const [videoId, setVideoId] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -53,14 +57,9 @@ const LandingHero = () => {
     };
 
   return (
-    <div className='bg-black w-full flex flex-col items-center gap-5 mb-5'>
-        <Logo width={450} height={450} />
-        <YouTube 
-
-                videoId={'xrCcO_YNVCc'}
-                opts={{ height: "320", width: "640" }}
-            />
-        <div className="bg-clip-text text-6xl font-extrabold text-white my-5">
+    <div className='bg-black w-full flex flex-col items-center gap-5'>
+        <Logo width={300} height={300} />
+        <div className="bg-clip-text text-9xl font-extrabold text-white mt-10 mb-20">
         <TypewriterComponent 
                     options={{
                         strings: [
@@ -74,11 +73,16 @@ const LandingHero = () => {
                     }}
                 />
         </div>
-            {/* <Link > */}
-                <Button onClick={onSubscribe} variant={'purple'} className='md:text-lg p-4 md:p-6 rounded-full font-semibold my-10'>
-                    QUERO ME INSCREVER AGORA!
+        <YouTube 
+
+                videoId={'xrCcO_YNVCc'}
+                opts={{ height: "640", width: "960" }}
+            />
+            <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
+                <Button onClick={onSubscribe} variant={'purple'} className='md:text-lg p-6 md:p-8 rounded-full my-10'>
+                    <p className='text-4xl font-semibold '>QUERO ME INSCREVER AGORA!</p>
                 </Button>
-            {/* </Link> */}
+            </Link>
             <Separator />
     </div>
   )

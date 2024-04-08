@@ -6,6 +6,7 @@ import { Montserrat } from "next/font/google";
 import { useAuth } from "@clerk/nextjs";
 import Link from 'next/link';
 
+
 const font = Montserrat({
     weight: "600",
     subsets: ['latin']
@@ -13,6 +14,7 @@ const font = Montserrat({
 
 const LandingHeader = () => {
     const { isSignedIn } = useAuth();
+
   return (
     <div className='flex items-center justify-between h-20 p-3 bg-black'>
       <Logo width={100} height={100} />
