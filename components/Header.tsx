@@ -26,10 +26,13 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useUser } from "@clerk/nextjs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserButton } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
+import { SignOutButton } from "@clerk/nextjs";
 
 const Header = () => {
   const router = useRouter();
-  const {user} = useUser();
+  const { user } = useUser();
+  const { signOut } = useClerk();
   const [loading, setLoading] = useState(false);
 
   const handleLinkClick = (href: string) => {
@@ -143,7 +146,12 @@ const Header = () => {
 
         </SheetContent>
         </Sheet>
-        <UserButton afterSignOutUrl="/"/>
+        {/* <div onClick={() => signOut(() => router.push('/'))}> */}
+        <div className='flex items-center gap-3'>
+          <UserButton afterSignOutUrl="/"/>
+          <SignOutButton className='bg-white rounded p-2' signOutCallback={() => router.push('/')} />
+        </div>
+        {/* </div> */}
       </div>
     </>
   )

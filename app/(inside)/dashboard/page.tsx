@@ -39,8 +39,10 @@ export default function Home() {
       try {
         // const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
         const response = await axios.request(options);
-        const videoIds = response.data.data.map((item: any) => item.videoId);
-        setVideoIds(videoIds);
+        const data = response.data.data;
+        const firstThreeVideos = data.slice(0, 3);
+        const videoIds = firstThreeVideos.map((item: any) => item.videoId);
+        setVideoIds(videoIds); 
       } catch (error) {
         console.error(error);
       }
