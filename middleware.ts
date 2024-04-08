@@ -9,9 +9,16 @@ export default authMiddleware({
   ],
   publicRoutes: [
     '/',
-  ]
+    '/api/stripe',
+    '/api/webhook',
+    '/undefined'
+  ],
+  ignoredRoutes: ["/((?!api|trpc))(_next.*|.+\.[\w]+$)", "/undefined"]
 });
 
 export const config = {
-  matcher: "/((?!api|static|.*\\..*|_next).*)",
+  matcher: [
+    "/((?!api|static|.*\\..*|_next).*)",
+    "/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"
+  ]
 };

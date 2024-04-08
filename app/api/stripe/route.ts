@@ -34,19 +34,19 @@ export async function GET() {
         const stripeSession = await stripe.checkout.sessions.create({
             success_url: 'http://localhost:3000/dashboard',
             cancel_url: 'http://localhost:3000',
-            payment_method_types: ['card'],
+            payment_method_types: ['card', 'boleto', 'paypal'],
             mode: 'subscription',
             billing_address_collection: 'auto',
-            customer_email: user.emailAddresses[0].emailAddress,
+            customer_email: user!.emailAddresses[0].emailAddress,
             line_items: [
                 {
                     price_data: {
-                        currency: 'USD',
+                        currency: 'BRL',
                         product_data: {
-                            name: 'Genius Pro',
-                            description: 'Unlimited AI Generations',
+                            name: 'Formando Creators',
+                            description: 'Curso de criação de conteúdo por Luide Matos',
                         },
-                        unit_amount: 2000,
+                        unit_amount: 2490,
                         recurring: {
                             interval: 'month'
                         }

@@ -9,11 +9,13 @@ import { Button } from './ui/button'
 import Logo from './Logo'
 import { Separator } from './ui/separator'
 import { useAuth } from '@clerk/nextjs'
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation'
 
 const LandingHero = () => {
 
-    const isSignedIn = useAuth()
+    const isSignedIn = useAuth();
+    const router = useRouter();
 
     const [videoId, setVideoId] = useState('');
     const [loading, setLoading] = useState(false);
@@ -44,10 +46,9 @@ const LandingHero = () => {
     //   }, []);
 
       const onSubscribe = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const response = await axios.get('/api/stripe');
-    
             window.location.href = response.data.url;
         } catch (error) {
             console.error(error, 'STRIPE_CLIENT_ERROR')
@@ -78,11 +79,9 @@ const LandingHero = () => {
                 videoId={'xrCcO_YNVCc'}
                 opts={{ height: "640", width: "960" }}
             />
-            <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
-                <Button onClick={onSubscribe} variant={'purple'} className='md:text-lg p-6 md:p-8 rounded-full my-10'>
-                    <p className='text-4xl font-semibold '>QUERO ME INSCREVER AGORA!</p>
-                </Button>
-            </Link>
+            <Button onClick={onSubscribe} variant={'purple'} className='md:text-lg p-6 md:p-8 rounded-full my-10'>
+                <p className='text-4xl font-semibold '>QUERO ME INSCREVER AGORA!</p>
+            </Button>
             <Separator />
     </div>
   )
