@@ -12,7 +12,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import {toast, ToastContainer} from "react-toastify";
@@ -20,6 +19,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from "@clerk/nextjs";
 import { Badge } from "@/components/ui/badge";
 import { IoIosClose } from "react-icons/io";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 
 const page = () => {
@@ -72,59 +78,65 @@ const page = () => {
               Criar post
             </Button>
           </DialogTrigger>
-          <DialogContent className='h-full w-full max-h-[450px] p-3' onCloseAutoFocus={(e) => e.preventDefault()}>
-            <DialogHeader>
+          <DialogContent className='h-full w-full max-h-[500px] p-3' onCloseAutoFocus={(e) => e.preventDefault()}>
+            <DialogHeader className='h-full'>
               <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
-              <DialogDescription className='flex flex-col w-full'>
-                <form onSubmit={createPost} className="w-full flex flex-col items-center justify-between">
-                  <div className='flex flex-col gap-5'>
-                    <Input
-                      placeholder="Título"
-                      className='w-full'
-                    />
-                    <Textarea
-                      placeholder="Conteúdo"
-                      className='w-full'
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                    />
+              <DialogDescription className='flex flex-col w-full max-h-full'>
+                <form onSubmit={createPost} className="w-full max-h-full flex flex-col items-center justify-between">
+                    <div className='flex flex-col gap-5'>
+                      <Input
+                        placeholder="Título"
+                        className='w-full'
+                      />
+                      <Textarea
+                        placeholder="Conteúdo"
+                        className='w-full max-h-full min-h-[150px]'
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                      />
 
-                  <div className='flex gap-3'>
-                    <Input 
-                      placeholder='Tags'
-                      className='w-full'
-                      value={tagsValue}
-                      onChange={(e) => setTagsValue(e.target.value)}
-                    />
-                    <Button 
-                    variant={'ghost'}
-                    className='w-1/2'
-                    onClick={() => {
-                      setTags([...tags, tagsValue]);
-                      setTagsValue('');
-                      }}
-                    onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
+                    <div className='flex gap-3'>
+                      <Input
+                        placeholder='Tags'
+                        className='w-full'
+                        value={tagsValue}
+                        onChange={(e) => setTagsValue(e.target.value)}
+                      />
+                      <Button
+                      type="button"
+                      variant={'ghost'}
+                      className='w-1/2'
+                      onClick={() => {
                         setTags([...tags, tagsValue]);
                         setTagsValue('');
-                      } 
-                    }}
-                    >
-                        Adicionar
-                    </Button>
+                        }}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          setTags([...tags, tagsValue]);
+                          setTagsValue('');
+                        } 
+                      }}
+                      >
+                          Adicionar
+                      </Button>
+                  </div>
+                  <Carousel className="w-full max-w-xs">
+                    <CarouselContent>
+                      {tags.map((tag: string) => (
+                          <CarouselItem key={tag}>
+                              <Badge className="flex items-center gap-2 max-w-20">
+                                <p>{tag}</p>
+                                <IoIosClose className="cursor-pointer w-5 h-5" onClick={() => setTags(tags.filter((t: string) => t !== tag))}/>
+                              </Badge>
+                          </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                    <CarouselPrevious />
+                    <CarouselNext />
+                  </Carousel>
                   </div>
 
-                      <div className='flex items-center gap-3 mb-5'>
-                          {tags.map((tag: string) => (
-                            <Badge className="flex items-center gap-2" key={tag}>
-                              <p>{tag}</p>
-                              <IoIosClose className="cursor-pointer w-3 h-3" onClick={() => setTags(tags.filter((t: string) => t !== tag))}/>
-                            </Badge>
-                          ))}
-                      </div>
-                  </div>
-
-                  <Button type="submit" variant='purple' className="w-1/2">Enviar</Button>
+                  <Button type="submit" variant='purple' className="w-1/2 relative bottom-0 mt-5">Enviar</Button>
                 </form>
               </DialogDescription>
             </DialogHeader>
