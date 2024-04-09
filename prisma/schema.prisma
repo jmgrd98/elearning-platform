@@ -43,6 +43,7 @@ model Doubt {
   aulaId String
   content String
   user User @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Post {
@@ -52,4 +53,5 @@ model Post {
   tags String[]
   likes Int
   user User @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
