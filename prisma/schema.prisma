@@ -35,3 +35,10 @@ model Doubt {
   aulaId String
   content String
 }
+
+model User {
+  id String @id
+  progress Int
+  followers Int
+  following Int
+}

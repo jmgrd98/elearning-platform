@@ -11,6 +11,7 @@ export default authMiddleware({
     '/',
     '/api/stripe',
     '/api/webhook',
+    "/api/webhooks(.*)",
     '/undefined'
   ],
   ignoredRoutes: ["/((?!api|trpc))(_next.*|.+\.[\w]+$)", "/undefined"]

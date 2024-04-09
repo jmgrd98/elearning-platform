@@ -28,6 +28,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserButton } from "@clerk/nextjs";
 import { useClerk } from "@clerk/nextjs";
 import { SignOutButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
@@ -146,15 +147,29 @@ const Header = () => {
 
         </SheetContent>
         </Sheet>
-        {/* <div onClick={() => signOut(() => router.push('/'))}> */}
-        <div className='flex items-center gap-3'>
+
+      <div className="flex items-center justify-center gap-5">
+        <Link href={'/dashboard'}>
+          <Button variant={'outline'} className="font-semibold">
+            Dashboard
+          </Button>
+        </Link>
+
+        <Link href={'/comunidade'}>
+          <Button variant={'outline'} className="font-semibold">
+            Comunidade
+          </Button>
+        </Link>
+
+      </div>
+
+        <div className='flex items-center gap-5'>
           <UserButton afterSignOutUrl="/"/>
         
-          <div className='bg-white rounded p-2'>
+          {/* <div className='bg-white rounded p-2 font-bold'>
             <SignOutButton signOutCallback={() => router.push('/')} />
-          </div>
+          </div> */}
         </div>
-        {/* </div> */}
       </div>
     </>
   )
