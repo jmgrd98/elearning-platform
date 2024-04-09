@@ -3,6 +3,7 @@ import prismadb from "@/lib/prismadb";
 interface PostCreateInput {
     userId: string;
     title: string;
+    imageUrl: string;
     content: string;
     tags: string[];
     likes: number;
@@ -10,11 +11,12 @@ interface PostCreateInput {
 
 export const POST = async (req: any) => {
     try {
-        const { userId, content, title, tags } = await req.json();
+        const { userId, content, title, tags, imageUrl } = await req.json();
         
         const data: PostCreateInput = {
             userId,
             title,
+            imageUrl,
             content,
             tags,
             likes: 0
@@ -24,8 +26,14 @@ export const POST = async (req: any) => {
             data,
         });
 
-        return new Response(JSON.stringify(newPost), { status: 201 });
+        return {
+            statusCode: 201,
+            body: JSON.stringify(newPost)
+        };
     } catch (error) {
-        return new Response(JSON.stringify(error), { status: 500 });
+        return {
+            statusCode: 500,
+            body: JSON.stringify(error)
+        };
     }
 }
