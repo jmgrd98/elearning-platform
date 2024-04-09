@@ -19,11 +19,13 @@ SelectValue,
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 
 const PostCard = ({ post }: any) => {
   return (
     <Card className="w-[350px]">
     <CardHeader>
+      <Image src={post.image} alt="image" width={350} height={200} />
       <CardTitle>{post.title}</CardTitle>
       <CardDescription>{post.content}</CardDescription>
     </CardHeader>

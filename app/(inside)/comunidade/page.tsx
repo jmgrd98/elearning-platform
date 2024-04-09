@@ -15,21 +15,22 @@ import {
   DialogFooter
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useUser } from "@clerk/nextjs";
 
 
 const page = () => {
+  const { user } = useUser();
 
   const [posts, setPosts] = useState([]);
+  const [inputValue, setInputValue] = useState('');
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get('/api/posts');
         setPosts(response.data);
-        console.log(posts);
       } catch (error) {
         console.error(error);
       }
@@ -40,13 +41,18 @@ const page = () => {
 
   const createPost = async () => {
     try {
-      await axios.post('/api/posts/create');
-      toast.success('Post criado com sucesso!');
+      const response = await axios.post('/api/posts/create', {
+        userId: user!.id,
+        content: inputValue,
+      });
+      console.log(response);
+      toast.success('Post created successfully!');
+      setInputValue('');
     } catch (error) {
       console.error(error);
+      toast.error('Failed to create post. Please try again!');
     }
-  }
-
+  };
 
   return (
     <>
@@ -54,23 +60,28 @@ const page = () => {
         <h1 className='text-4xl font-bold'>Comunidade</h1>
 
         <Dialog>
-            <DialogTrigger asChild>
-              <Button variant={'purple'} className=' rounded p-3 cursor-pointer'>
-                Criar post
-              </Button>
-              </DialogTrigger>
-            <DialogContent className='h-full max-h-[600px]' onCloseAutoFocus={(e) => e.preventDefault()}>
-              <DialogHeader>
-                <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
-                <DialogDescription className='flex flex-col items-center gap-5'>
-                  <form>
-                    <Input placeholder="Título" className='w-1/2' />
-                    <Textarea placeholder="Conteudo" className='w-1/2' />
-                    <Button onClick={() => createPost()} className="w-1/2">Enviar</Button>
-                  </form>
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
+          <DialogTrigger asChild>
+            <Button variant={'purple'} className='rounded p-3 cursor-pointer'>
+              Criar post
+            </Button>
+          </DialogTrigger>
+          <DialogContent className='h-full w-full max-h-[450px] p-3' onCloseAutoFocus={(e) => e.preventDefault()}>
+            <DialogHeader>
+              <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
+              <DialogDescription className='flex flex-col w-full'>
+                <form onSubmit={createPost} className="w-full flex flex-col items-center gap-5">
+                  <Input
+                    placeholder="Título"
+                    className='w-full'
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                  />
+                  <Textarea placeholder="Conteúdo" className='w-full' />
+                  <Button type="submit" className="w-1/2">Enviar</Button>
+                </form>
+              </DialogDescription>
+            </DialogHeader>
+          </DialogContent>
         </Dialog>
 
         <p>Interaja com a comunidade de Creators!</p>
@@ -82,19 +93,19 @@ const page = () => {
         ))}
       </div>
       <ToastContainer
-                  position="bottom-left"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick={true}
-                  rtl={false}
-                  pauseOnFocusLoss={false}
-                  draggable={true}
-                  pauseOnHover={true}
-                  className={'z-0'}
-              />
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable={true}
+        pauseOnHover={true}
+        className={'z-0'}
+      />
     </>
   )
 }
 
-export default page
+export default page;
