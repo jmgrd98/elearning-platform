@@ -150,13 +150,13 @@ const Header = () => {
 
       <div className="flex items-center justify-center gap-5">
         <Link href={'/dashboard'}>
-          <Button variant={'outline'} className="font-semibold">
+          <Button className="font-semibold p-2 bg-transparent border border-white rounded text-white hover:bg-white hover:text-black">
             Dashboard
           </Button>
         </Link>
 
         <Link href={'/comunidade'}>
-          <Button variant={'outline'} className="font-semibold">
+          <Button  className="font-semibold p-2 bg-transparent border border-white rounded text-white hover:bg-white hover:text-black">
             Comunidade
           </Button>
         </Link>
