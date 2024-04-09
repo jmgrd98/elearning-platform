@@ -18,6 +18,8 @@ import { Textarea } from "@/components/ui/textarea";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from "@clerk/nextjs";
+import { Badge } from "@/components/ui/badge";
+import { IoIosClose } from "react-icons/io";
 
 
 const page = () => {
@@ -25,6 +27,9 @@ const page = () => {
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [titleValue, setTitleValue] = useState('');
+  const [tags, setTags] = useState([]);
+  const [tagsValue, setTagsValue] = useState('');
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -43,7 +48,9 @@ const page = () => {
     try {
       const response = await axios.post('/api/posts/create', {
         userId: user!.id,
+        title: titleValue,
         content: inputValue,
+        tags
       });
       console.log(response);
       toast.success('Post created successfully!');
@@ -69,15 +76,55 @@ const page = () => {
             <DialogHeader>
               <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
               <DialogDescription className='flex flex-col w-full'>
-                <form onSubmit={createPost} className="w-full flex flex-col items-center gap-5">
-                  <Input
-                    placeholder="Título"
-                    className='w-full'
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                  />
-                  <Textarea placeholder="Conteúdo" className='w-full' />
-                  <Button type="submit" className="w-1/2">Enviar</Button>
+                <form onSubmit={createPost} className="w-full flex flex-col items-center justify-between">
+                  <div className='flex flex-col gap-5'>
+                    <Input
+                      placeholder="Título"
+                      className='w-full'
+                    />
+                    <Textarea
+                      placeholder="Conteúdo"
+                      className='w-full'
+                      value={inputValue}
+                      onChange={(e) => setInputValue(e.target.value)}
+                    />
+
+                  <div className='flex gap-3'>
+                    <Input 
+                      placeholder='Tags'
+                      className='w-full'
+                      value={tagsValue}
+                      onChange={(e) => setTagsValue(e.target.value)}
+                    />
+                    <Button 
+                    variant={'ghost'}
+                    className='w-1/2'
+                    onClick={() => {
+                      setTags([...tags, tagsValue]);
+                      setTagsValue('');
+                      }}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        setTags([...tags, tagsValue]);
+                        setTagsValue('');
+                      } 
+                    }}
+                    >
+                        Adicionar
+                    </Button>
+                  </div>
+
+                      <div className='flex items-center gap-3 mb-5'>
+                          {tags.map((tag: string) => (
+                            <Badge className="flex items-center gap-2" key={tag}>
+                              <p>{tag}</p>
+                              <IoIosClose className="cursor-pointer w-3 h-3" onClick={() => setTags(tags.filter((t: string) => t !== tag))}/>
+                            </Badge>
+                          ))}
+                      </div>
+                  </div>
+
+                  <Button type="submit" variant='purple' className="w-1/2">Enviar</Button>
                 </form>
               </DialogDescription>
             </DialogHeader>

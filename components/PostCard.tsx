@@ -24,19 +24,19 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 const PostCard = ({ post }: any) => {
   return (
     <Card className="w-[350px]">
-    <CardHeader>
-      <Image src={post.image} alt="image" width={350} height={200} />
-      <CardTitle>{post.title}</CardTitle>
-      <CardDescription>{post.content}</CardDescription>
-    </CardHeader>
-    <CardContent>
-      {post.content}
-    </CardContent>
-    <CardFooter className="flex justify-between">
-      <Button variant="outline">Cancel</Button>
-      <Button>Deploy</Button>
-    </CardFooter>
-  </Card>
+      <CardHeader>
+        <Image src={post.image} alt="image" width={350} height={200} />
+        <CardTitle>{post.title}</CardTitle>
+        <CardDescription>{post.content}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        {post.content}
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button variant="outline">Cancel</Button>
+        <Button>Deploy</Button>
+      </CardFooter>
+    </Card>
   )
 }
 
