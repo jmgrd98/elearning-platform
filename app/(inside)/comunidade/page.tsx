@@ -2,9 +2,17 @@
 
 import { useState, useEffect } from "react"
 import { Input } from "@/components/ui/input"
+import PostCard from "@/components/PostCard";
+import axios from "axios";
 
 
 const page = () => {
+
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    
+  }, [])
 
 
   return (
@@ -15,7 +23,7 @@ const page = () => {
 
       <Input placeholder="Pesquise por posts, tags ou usuários..." className='w-1/2' />
 
-      
+      <PostCard />
     </div>
   )
 }
