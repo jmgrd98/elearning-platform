@@ -13,6 +13,7 @@ import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useUser } from "@clerk/nextjs";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 
 const PostCard = ({ post, userId }: any) => {
@@ -53,13 +54,13 @@ const PostCard = ({ post, userId }: any) => {
   };
 
   const handleCardClick = () => {
-    router.push(`/posts/${post.id}`);
+    router.push(`/post/${post.id}`);
   };
 
   return (
     <Card onClick={handleCardClick} className="w-full cursor-pointer">
       <CardHeader className="flex items-center gap-5 w-full">
-        <img
+        <Image
           src={post.imageUrl}
           alt="image"
           width={50}
@@ -76,7 +77,7 @@ const PostCard = ({ post, userId }: any) => {
           ))}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      <CardFooter className="flex justify-between z-10">
         <div className="font-semibold text-sm">
           {formatDate(post.createdAt)}
         </div>
