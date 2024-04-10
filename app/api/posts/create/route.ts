@@ -7,6 +7,7 @@ interface PostCreateInput {
     content: string;
     tags: string[];
     likes: number;
+    createdAt: Date;
 }
 
 export const POST = async (req: any) => {
@@ -19,7 +20,8 @@ export const POST = async (req: any) => {
             imageUrl,
             content,
             tags,
-            likes
+            likes,
+            createdAt: new Date()
         };
 
         const newPost = await prismadb.post.create({

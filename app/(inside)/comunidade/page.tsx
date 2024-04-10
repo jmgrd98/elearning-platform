@@ -17,7 +17,15 @@ import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from "@clerk/nextjs";
 import CreatePostForm from "@/components/CreatePostForm";
-
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 const page = () => {
   const { user } = useUser();
@@ -61,11 +69,33 @@ const page = () => {
 
         <p>Interaja com a comunidade de Creators!</p>
 
-        <Input placeholder="Pesquise por posts, tags ou usuários..." className='w-1/2' />
+      <div className='flex items-center justify-center gap-5 w-full'>
+        <Input placeholder="Pesquise por posts, tags ou usuários..." className='w-2/3' />
 
-        {posts.map((post: any) => (
-          <PostCard key={post.id} post={post} />
-        ))}
+        <Select>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder="Select a fruit" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Fruits</SelectLabel>
+              <SelectItem value="apple">Apple</SelectItem>
+              <SelectItem value="banana">Banana</SelectItem>
+              <SelectItem value="blueberry">Blueberry</SelectItem>
+              <SelectItem value="grapes">Grapes</SelectItem>
+              <SelectItem value="pineapple">Pineapple</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+        </div>
+
+        <div className="flex items-center justify-center gap-5 flex-wrap w-full">
+          {posts.map((post: any) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+
+
       </div>
       <ToastContainer
         position="bottom-left"

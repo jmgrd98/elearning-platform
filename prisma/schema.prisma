@@ -54,6 +54,7 @@ model Post {
   content String
   tags String[]
   likes Int
+  createdAt DateTime
   // user User @relation(fields: [userId], references: [id])
   // @@index([userId])
 }
