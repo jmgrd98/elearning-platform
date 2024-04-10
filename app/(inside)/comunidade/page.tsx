@@ -41,7 +41,7 @@ const Page = () => {
     };
 
     fetchPosts();
-  }, []);
+  }, [posts]);
 
   return (
     <>

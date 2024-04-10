@@ -19,7 +19,7 @@ model User {
   followers Int
   following Int
   doubts Doubt[]
-  // posts Post[]
+  posts Post[]
 }
 
 model UserSubscription {
@@ -32,30 +32,37 @@ model UserSubscription {
 }
 
 model Lesson {
-  id Int @id @default(autoincrement())
-  videoUrl String @unique
+  id          Int      @id @default(autoincrement())
+  videoUrl    String   @unique
   isCompleted Boolean
+  doubts      Doubt[]
 }
 
 model Doubt {
-  id String @id @default(uuid())
-  userId String
-  aulaId String
-  content String
-  user User @relation(fields: [userId], references: [id])
+  id        String    @id @default(uuid())
+  userId    String
+  content   String
+  createdAt DateTime
+  updatedAt DateTime
+  user      User      @relation(fields: [userId], references: [id])
+  lesson    Lesson    @relation(fields: [lessonId], references: [id])
+  lessonId  Int
   @@index([userId])
+  @@index([lessonId])
 }
 
 model Post {
-  id String @id @default(uuid())
-  userId String
-  imageUrl String
-  title String
-  content String
-  tags String[]
-  likes Int
-  likedBy String[]
+  id        String   @id @default(uuid())
+  userId    String
+  imageUrl  String
+  title     String
+  content   String
+  tags      String[]
+  likes     Int
+  likedBy   String[]
   createdAt DateTime
-  // user User @relation(fields: [userId], references: [id])
-  // @@index([userId])
+  updatedAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
+

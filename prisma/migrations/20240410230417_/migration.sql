@@ -68,3 +68,6 @@ CREATE UNIQUE INDEX "Lesson_videoUrl_key" ON "Lesson"("videoUrl");
 
 -- CreateIndex
 CREATE INDEX "Doubt_userId_idx" ON "Doubt"("userId");
+
+-- CreateIndex
+CREATE INDEX "Post_userId_idx" ON "Post"("userId");

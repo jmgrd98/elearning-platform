@@ -29,18 +29,22 @@ const PostPage = () => {
   }
 
   return (
-    <div className='flex flex-col items-center '>
-      <div className='flex items-center gap-10'>
+    <div className='flex flex-col items-center p-10 w-full'>
+      <div className='flex items-center gap-10 border border-red-500 w-full'>
         <Image
           src={post.imageUrl}
           alt="image"
-          width={50}
-          height={50}
+          width={100}
+          height={100}
           className="rounded-full"
         />
-        <h1>{post.title}</h1>
+       <p></p>
       </div>
-      <p>{post.content}</p>
+
+      <div className='flex flex-col items-center gap-10'>
+        <h1>{post.title}</h1>
+        <p>{post.content}</p>
+      </div>
     </div>
   );
 };

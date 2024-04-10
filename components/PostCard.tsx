@@ -14,9 +14,15 @@ import { useUser } from "@clerk/nextjs";
 import { Badge } from "./ui/badge";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Post } from "@prisma/client";
+
+interface PostCardProps {
+  post: Post;
+  userId: string;
+}
 
 
-const PostCard = ({ post, userId }: any) => {
+const PostCard = ({ post, userId }: PostCardProps) => {
 
   const { user } = useUser();
   const router = useRouter();
@@ -45,11 +51,10 @@ const PostCard = ({ post, userId }: any) => {
     }
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, "0");
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const year = date.getFullYear();
+  const formatDate = (dateString: Date) => {
+    const day = dateString.getDate().toString().padStart(2, "0");
+    const month = (dateString.getMonth() + 1).toString().padStart(2, "0");
+    const year = dateString.getFullYear();
     return `${day}/${month}/${year}`;
   };
 
