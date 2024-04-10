@@ -76,11 +76,10 @@ const Page = () => {
 
           <Select>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Select a fruit" />
+              <SelectValue placeholder="Filtrar" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Filtrar</SelectLabel>
                 <SelectItem value="+likes">Mais likes</SelectItem>
                 <SelectItem value="-likes">Menos likes</SelectItem>
               </SelectGroup>
