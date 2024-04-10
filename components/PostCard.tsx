@@ -15,9 +15,10 @@ const PostCard = ({ post }: any) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(post.likes);
 
-  const likePost = async () => {
+  const likePost = async (e: any) => {
+    e.preventDefault();
     try {
-      const response = await axios.put(`/api/posts/edit/${post.id}`);
+      const response = await axios.put(`/api/posts/like/${post.id}`);
       if (response.status === 200) {
         setLiked(!liked);
         setLikes(liked ? likes - 1 : likes + 1);
@@ -39,8 +40,8 @@ const PostCard = ({ post }: any) => {
       <CardFooter className="flex justify-between">
         <div className="flex items-center gap-2">
           {liked ? 
-            <AiFillLike className='w-5 h-5 cursor-pointer text-blue-500' onClick={likePost}/> :
-            <AiOutlineLike className='w-5 h-5 cursor-pointer' onClick={likePost}/>
+            <AiFillLike className='w-5 h-5 cursor-pointer text-blue-500' onClick={(e) => likePost(e)}/> :
+            <AiOutlineLike className='w-5 h-5 cursor-pointer' onClick={(e) => likePost(e)}/>
           }
           <span>{likes}</span>
         </div>
