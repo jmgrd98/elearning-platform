@@ -19,7 +19,7 @@ model User {
   followers Int
   following Int
   doubts Doubt[]
-  posts Post[]
+  // posts Post[]
 }
 
 model UserSubscription {
@@ -54,6 +54,6 @@ model Post {
   content String
   tags String[]
   likes Int
-  user User @relation(fields: [userId], references: [id])
-  @@index([userId])
+  // user User @relation(fields: [userId], references: [id])
+  // @@index([userId])
 }

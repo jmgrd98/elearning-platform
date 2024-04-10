@@ -29,22 +29,27 @@ const CreatePostForm = () => {
 
     const createPost = async () => {
         try {
-          const response = await axios.post('/api/posts/create', {
-            userId: user!.id,
-            imageUrl: user!.imageUrl,
-            title: titleValue,
-            content: contentValue,
-            tags: tags,
-            likes: 0,
-            user: user
-          });
-          console.log(response)
-          toast.success('Post created successfully!');
+            const response = await axios.post('/api/posts/create', {
+                userId: user!.id,
+                imageUrl: user!.imageUrl,
+                title: titleValue,
+                content: contentValue,
+                tags: tags,
+                likes: 0,
+                user: {
+                    connect: {
+                        id: user!.id,
+                    },
+                },
+            });
+            console.log(response);
+            toast.success('Post created successfully!');
         } catch (error) {
-          console.error(error);
-          toast.error('Failed to create post. Please try again!');
+            console.error(error);
+            toast.error('Failed to create post. Please try again!');
         }
-      };
+    };
+    
 
 
   return (
@@ -106,8 +111,9 @@ const CreatePostForm = () => {
 
         <Button
         onClick={(e) => {
-            e.stopPropagation(); // Prevents the dialog from closing
-            createPost(); // Call your createPost function
+            e.preventDefault(); 
+            e.stopPropagation();
+            createPost();
         }}
         variant='purple'
         className="w-1/2 relative bottom-0 mt-5"

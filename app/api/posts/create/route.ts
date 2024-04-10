@@ -7,12 +7,11 @@ interface PostCreateInput {
     content: string;
     tags: string[];
     likes: number;
-    user: any
 }
 
 export const POST = async (req: any) => {
     try {
-        const { userId, content, title, tags, imageUrl, likes, user } = await req.json();
+        const { userId, content, title, tags, imageUrl, likes } = await req.json();
         
         const data: PostCreateInput = {
             userId,
@@ -20,8 +19,7 @@ export const POST = async (req: any) => {
             imageUrl,
             content,
             tags,
-            likes,
-            user
+            likes
         };
 
         const newPost = await prismadb.post.create({

@@ -64,8 +64,7 @@ const page = () => {
         <Input placeholder="Pesquise por posts, tags ou usuários..." className='w-1/2' />
 
         {posts.map((post: any) => (
-          <></>
-          // <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} />
         ))}
       </div>
       <ToastContainer
