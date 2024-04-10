@@ -13,9 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useUser } from "@clerk/nextjs";
 import CreatePostForm from "@/components/CreatePostForm";
 import {
   Select,
@@ -28,7 +26,6 @@ import {
 } from "@/components/ui/select"
 
 const page = () => {
-  const { user } = useUser();
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -78,12 +75,9 @@ const page = () => {
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              <SelectLabel>Filtrar</SelectLabel>
+              <SelectItem value="+likes">Mais likes</SelectItem>
+              <SelectItem value="-likes">Menos likes</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -97,18 +91,6 @@ const page = () => {
 
 
       </div>
-      <ToastContainer
-        position="bottom-left"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={false}
-        draggable={true}
-        pauseOnHover={true}
-        className={'z-0'}
-      />
     </>
   )
 }
