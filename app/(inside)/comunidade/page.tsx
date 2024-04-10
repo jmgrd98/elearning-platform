@@ -66,7 +66,7 @@ const Page = () => {
 
         <p>Interaja com a comunidade de Creators!</p>
 
-      <div className='flex items-center justify-center gap-5 w-full'>
+        <div className='flex items-center justify-center gap-5 w-full'>
           <Input
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
@@ -85,14 +85,13 @@ const Page = () => {
               </SelectGroup>
             </SelectContent>
           </Select>
-       </div>
+        </div>
 
-        <div className="flex items-center justify-center gap-5 flex-wrap w-full">
+        <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full p-10">
           {posts.map((post: any) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-
 
       </div>
     </>

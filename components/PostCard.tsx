@@ -11,15 +11,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useUser } from "@clerk/nextjs";
+import { Badge } from "./ui/badge";
+import { useRouter } from "next/navigation";
+
 
 const PostCard = ({ post, userId }: any) => {
 
   const { user } = useUser();
-
+  const router = useRouter();
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(post.likes);
 
-  // Check if the user has already liked the post
   useEffect(() => {
     const isLiked = post.likedBy.includes(userId);
     setLiked(isLiked);
@@ -50,8 +52,12 @@ const PostCard = ({ post, userId }: any) => {
     return `${day}/${month}/${year}`;
   };
 
+  const handleCardClick = () => {
+    router.push(`/posts/${post.id}`);
+  };
+
   return (
-    <Card className="w-[350px]">
+    <Card onClick={handleCardClick} className="w-full cursor-pointer">
       <CardHeader className="flex items-center gap-5 w-full">
         <img
           src={post.imageUrl}
@@ -62,7 +68,14 @@ const PostCard = ({ post, userId }: any) => {
         />
         <CardTitle>{post.title}</CardTitle>
       </CardHeader>
-      <CardContent>{post.content}</CardContent>
+      <CardContent className='flex flex-col gap-3'>
+        <p>{post.content}</p>
+        <div className='flex items-center gap-3'>
+          {post.tags.map((tag: string) => (
+            <Badge key={tag}>{tag}</Badge>
+          ))}
+        </div>
+      </CardContent>
       <CardFooter className="flex justify-between">
         <div className="font-semibold text-sm">
           {formatDate(post.createdAt)}
