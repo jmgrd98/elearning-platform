@@ -25,7 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
-const page = () => {
+const Page = () => {
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -67,21 +67,26 @@ const page = () => {
         <p>Interaja com a comunidade de Creators!</p>
 
       <div className='flex items-center justify-center gap-5 w-full'>
-        <Input placeholder="Pesquise por posts, tags ou usuários..." className='w-2/3' />
+          <Input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Pesquise por posts, tags ou usuários..."
+            className='w-2/3'
+          />
 
-        <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a fruit" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Filtrar</SelectLabel>
-              <SelectItem value="+likes">Mais likes</SelectItem>
-              <SelectItem value="-likes">Menos likes</SelectItem>
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-        </div>
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Select a fruit" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Filtrar</SelectLabel>
+                <SelectItem value="+likes">Mais likes</SelectItem>
+                <SelectItem value="-likes">Menos likes</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+       </div>
 
         <div className="flex items-center justify-center gap-5 flex-wrap w-full">
           {posts.map((post: any) => (

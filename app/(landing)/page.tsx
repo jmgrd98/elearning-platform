@@ -6,8 +6,6 @@ import LandingContent from "@/components/LandingContent";
 
 
 const page = () => {
-
-    
     
   return (
     <div className="h-full">
