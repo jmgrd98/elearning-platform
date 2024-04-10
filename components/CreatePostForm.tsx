@@ -24,7 +24,7 @@ const CreatePostForm = () => {
 
     const [titleValue, setTitleValue] = useState('');
     const [contentValue, setContentValue] = useState('');
-    const [tags, setTags] = useState([]);
+    const [tags, setTags] = useState<string[]>([]);
     const [tagsValue, setTagsValue] = useState('');
 
     const createPost = async () => {
