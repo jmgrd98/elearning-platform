@@ -16,6 +16,7 @@ import {
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from "@clerk/nextjs";
+import CreatePostForm from "@/components/CreatePostForm";
 
 
 const page = () => {
@@ -52,7 +53,7 @@ const page = () => {
             <DialogHeader className='h-full'>
               <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
               <DialogDescription className='flex flex-col w-full max-h-full'>
-                
+                <CreatePostForm />
               </DialogDescription>
             </DialogHeader>
           </DialogContent>

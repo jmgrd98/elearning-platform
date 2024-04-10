@@ -34,7 +34,9 @@ const CreatePostForm = () => {
             imageUrl: user!.imageUrl,
             title: titleValue,
             content: contentValue,
-            tags: tags
+            tags: tags,
+            likes: 0,
+            user: user
           });
           console.log(response)
           toast.success('Post created successfully!');
