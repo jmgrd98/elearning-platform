@@ -7,11 +7,13 @@ import { useParams } from 'next/navigation';
 import { Post, User } from '@prisma/client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useUser } from '@clerk/nextjs';
 
 const PostPage = () => {
+  const { user } = useUser();
   const { userId, id } = useParams();
   const [post, setPost] = useState<Post | null>(null);
-  const [user, setUser] = useState<User | null>(null);
+  const [postAuthor, setPostAuthor] = useState<User | null>(null);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   useEffect(() => {
@@ -24,25 +26,30 @@ const PostPage = () => {
       }
     };
 
-    const fetchUser = async () => {
+    const fetchPostAuthor = async () => {
       try {
         const response = await axios.get<User>(`/api/users/${userId}`);
-        setUser(response.data);
+        setPostAuthor(response.data);
+        checkIfAlreadyFollowing(response.data);
       } catch (error) {
         console.error('Error fetching user:', error);
       }
     };
 
+    const checkIfAlreadyFollowing = (author: User) => {
+      setIsFollowing(author.followers.includes(user!.id));
+    };
+
     fetchPost();
-    fetchUser();
+    fetchPostAuthor();
   }, [userId, id]);
 
   const followUser = async () => {
     try {
-      await axios.put(`/api/users/follow/${userId}`, { followerId: user!.id });
-      setUser((prevUser: any) => ({
+      await axios.put(`/api/users/follow/${userId}`, { followerId: postAuthor!.id });
+      setPostAuthor((prevUser: any) => ({
         ...prevUser,
-        followers: [...prevUser!.followers, user!.id], // Update followers array
+        followers: [...prevUser!.followers, postAuthor!.id],
       }));
       setIsFollowing(true);
     } catch (error) {
@@ -52,10 +59,10 @@ const PostPage = () => {
 
   const unfollowUser = async () => {
     try {
-      await axios.put(`/api/users/unfollow/${userId}`, { followerId: user!.id});
-      setUser((prevUser: any) => ({
+      await axios.put(`/api/users/unfollow/${userId}`, { followerId: postAuthor!.id});
+      setPostAuthor((prevUser: any) => ({
         ...prevUser,
-        followers: prevUser!.followers.filter((id: string) => id !== user!.id), // Remove follower from followers array
+        followers: prevUser!.followers.filter((id: string) => id !== postAuthor!.id),
       }));
       setIsFollowing(false);
     } catch (error) {
@@ -63,7 +70,7 @@ const PostPage = () => {
     }
   };
 
-  if (!post || !user) {
+  if (!post || !postAuthor) {
     return <div>Loading...</div>;
   }
 
@@ -82,15 +89,15 @@ const PostPage = () => {
 
           <div className='flex flex-col items-left gap-5 w-full'>
             <div className='flex items-center justify-between w-full'>
-              <p className='font-bold text-2xl text-black'>{user.firstName} {user.lastName}</p>
+              <p className='font-bold text-2xl text-black'>{postAuthor!.firstName} {postAuthor!.lastName}</p>
               <Button variant='purple' onClick={isFollowing ? unfollowUser : followUser}>{isFollowing ? 'Deixar de seguir' : '+ Seguir'}</Button>
             </div>
             <div className='flex items-center gap-5'>
               <Badge variant='secondary' className='cursor-pointer'>
-                {user.followers.length} seguidores
+                {postAuthor!.followers.length} seguidores
               </Badge>
               <Badge variant='secondary' className='cursor-pointer'>
-                {user.following.length} seguindo
+                {postAuthor!.following.length} seguindo
               </Badge>
             </div>
           </div>
