@@ -1,13 +1,13 @@
 import prismadb from "@/lib/prismadb";
 
-export const PUT = async (req: any) => {
+export const PATCH = async (req: any) => {
     try {
         const { id } = req.params;
-        const body = await req.json();
+        const { fieldToUpdate, valueToUpdate } = await req.json();
         const updatedPost = await prismadb.post.update({
             where: { id },
             data: {
-                content: body.content,
+                [fieldToUpdate]: valueToUpdate,
             },
         });
         return new Response(JSON.stringify(updatedPost), { status: 200 });

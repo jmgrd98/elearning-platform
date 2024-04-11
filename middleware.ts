@@ -16,6 +16,7 @@ export default authMiddleware({
     '/',
     '/api/stripe',
     '/api/webhook',
+    '/api/clerk-webhook',
     "/api/webhooks(.*)",
     '/undefined',
     '/api/posts/create',
