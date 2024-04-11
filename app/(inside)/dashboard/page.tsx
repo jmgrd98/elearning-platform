@@ -23,7 +23,6 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(user)
     if (userId && user) {
       createUser();
     }
@@ -32,11 +31,7 @@ export default function Home() {
   const createUser = async () => {
     try {
       setLoading(true);
-      console.log(user)
       const { firstName, lastName, imageUrl } = user || {};
-      console.log('FIRST NAME', firstName);
-      console.log('LAST NAME', lastName);
-      console.log('IMAGE URL', imageUrl);
       const response = await axios.post('/api/users/create', {userId, imageUrl, firstName, lastName});
       console.log(response);
     } catch (error) {

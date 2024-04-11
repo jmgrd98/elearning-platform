@@ -57,6 +57,7 @@ model Doubt {
 model Post {
   id        String   @id @default(uuid())
   userId    String
+  imageUrl  String
   title     String
   content   String
   tags      String[]

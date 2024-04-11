@@ -19,10 +19,11 @@ import { Post } from "@prisma/client";
 interface PostCardProps {
   post: Post;
   userId: string;
+  userName: string | undefined;
 }
 
 
-const PostCard = ({ post, userId }: PostCardProps) => {
+const PostCard = ({ post, userId, userName }: PostCardProps) => {
 
   const { user } = useUser();
   const router = useRouter();
@@ -62,7 +63,8 @@ const PostCard = ({ post, userId }: PostCardProps) => {
   
 
   const handleCardClick = () => {
-    router.push(`/post/${post.userId}/${post.id}`);
+    console.log(userId)
+    router.push(`/post/${userId}/${post.id}`);
   };
 
   return (

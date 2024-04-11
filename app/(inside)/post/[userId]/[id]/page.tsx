@@ -8,6 +8,7 @@ import { Post, User } from '@prisma/client';
 
 const PostPage = () => {
   const { id } = useParams();
+  const { userId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [user, setUser] = useState<User | null>(null);
 
@@ -22,35 +23,39 @@ const PostPage = () => {
     };
 
     const fetchUser = async () => {
+      console.log(userId)
       try {
-        const response = await axios.get<User>(`/api/users/${id}`);
+        const response = await axios.get<User>(`/api/users/${userId}`);
         setUser(response.data);
       } catch (error) {
         console.error('Error fetching user:', error);
       }
-    };
+    }
 
-    if (id) {
       fetchPost();
       fetchUser();
-    }
-  }, [id]);
+  }, [userId, id]);
 
-  if (!post || !user) {
+  if (!post) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className='flex flex-col items-center p-10 w-full'>
       <div className='flex items-center gap-10 border border-red-500 w-full'>
-        <Image
-          src={post.imageUrl}
-          alt="image"
-          width={100}
-          height={100}
-          className="rounded-full"
-        />
-        <p>User ID: {user.id}</p>
+        {post.imageUrl && (
+          <>
+            <Image
+              src={post.imageUrl}
+              alt="image"
+              width={100}
+              height={100}
+              className="rounded-full"
+            />
+
+            <p className='text-black'>{user?.firstName}</p>
+          </>
+        )}
       </div>
 
       <div className='flex flex-col items-center gap-10'>

@@ -18,7 +18,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
 
-const CreatePostForm = () => {
+interface CreatePostFormProps {
+    onClose: Function
+}
+
+const CreatePostForm = ({ onClose }: CreatePostFormProps) => {
 
     const { user } = useUser();
 
@@ -40,6 +44,7 @@ const CreatePostForm = () => {
             });
             console.log(response);
             toast.success('Post created successfully!');
+            onClose();
         } catch (error) {
             console.error(error);
             toast.error('Failed to create post. Please try again!');

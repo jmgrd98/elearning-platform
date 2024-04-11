@@ -32,6 +32,7 @@ const Page = () => {
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -51,7 +52,7 @@ const Page = () => {
       <div className="p-5 text-center flex flex-col gap-10 items-center">
         <h1 className='text-4xl font-bold'>Comunidade</h1>
 
-        <Dialog>
+        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
             <Button variant={'purple'} className='rounded p-3 cursor-pointer'>
               Criar post
@@ -61,7 +62,7 @@ const Page = () => {
             <DialogHeader className='h-full'>
               <DialogTitle className='text-xl font-bold mb-5'>Criar post</DialogTitle>
               <DialogDescription className='flex flex-col w-full max-h-full'>
-                <CreatePostForm />
+                <CreatePostForm onClose={() => setDialogOpen(false)} />
               </DialogDescription>
             </DialogHeader>
           </DialogContent>
@@ -92,7 +93,7 @@ const Page = () => {
 
         <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full p-10">
           {posts.map((post: any) => (
-            <PostCard key={post.id} post={post} userId={user!.id} />
+            <PostCard key={post.id} post={post} userId={user!.id} userName={user!.firstName?.replace(/ /g, '-').toLowerCase()} />
           ))}
         </div>
 
