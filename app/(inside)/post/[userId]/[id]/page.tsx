@@ -33,24 +33,17 @@ const PostPage = () => {
       }
     };
 
-    // const checkIsFollowing = async () => {
-    //   try {
-    //     // Make a request to check if the current user is already following the user
-    //     const response = await axios.get<boolean>(`/api/users/${userId}/is-following`);
-    //     setIsFollowing(response.data);
-    //   } catch (error) {
-    //     console.error('Error checking if following:', error);
-    //   }
-    // };
-
     fetchPost();
     fetchUser();
-    // checkIsFollowing();
   }, [userId, id]);
 
   const followUser = async () => {
     try {
-      await axios.post(`/api/users/${userId}/follow`);
+      await axios.put(`/api/users/follow/${userId}`, { followerId: user!.id });
+      setUser((prevUser: any) => ({
+        ...prevUser,
+        followers: [...prevUser!.followers, user!.id], // Update followers array
+      }));
       setIsFollowing(true);
     } catch (error) {
       console.error('Error following user:', error);
@@ -59,9 +52,12 @@ const PostPage = () => {
 
   const unfollowUser = async () => {
     try {
-      await axios.delete(`/api/users/${userId}/unfollow`);
+      await axios.put(`/api/users/unfollow/${userId}`, { followerId: user!.id});
+      setUser((prevUser: any) => ({
+        ...prevUser,
+        followers: prevUser!.followers.filter((id: string) => id !== user!.id), // Remove follower from followers array
+      }));
       setIsFollowing(false);
-      
     } catch (error) {
       console.error('Error unfollowing user:', error);
     }
@@ -73,7 +69,7 @@ const PostPage = () => {
 
   return (
     <div className='flex flex-col items-center p-10 w-full'>
-      <div className='flex items-center gap-10 border border-red-500 w-full'>
+      <div className='flex items-center gap-10 w-full'>
         {post.imageUrl && (
           <>
             <Image
@@ -84,16 +80,16 @@ const PostPage = () => {
               className="rounded-full"
             />
 
-          <div className='flex flex-col items-left gap-5'>
-            <div className='flex items-center justify-between'>
+          <div className='flex flex-col items-left gap-5 w-full'>
+            <div className='flex items-center justify-between w-full'>
               <p className='font-bold text-2xl text-black'>{user.firstName} {user.lastName}</p>
-              <Button variant='purple'>+ Seguir</Button>
+              <Button variant='purple' onClick={isFollowing ? unfollowUser : followUser}>{isFollowing ? 'Deixar de seguir' : '+ Seguir'}</Button>
             </div>
             <div className='flex items-center gap-5'>
-              <Badge variant='secondary' className='cursor-pointer' onClick={followUser}>
+              <Badge variant='secondary' className='cursor-pointer'>
                 {user.followers.length} seguidores
               </Badge>
-              <Badge variant='secondary' className='cursor-pointer' onClick={unfollowUser}>
+              <Badge variant='secondary' className='cursor-pointer'>
                 {user.following.length} seguindo
               </Badge>
             </div>

@@ -5,7 +5,6 @@ export const GET = async (req: NextRequest) => {
     const url = new URL(req.url);
     const pathname = url.pathname;
     const id = pathname.split('/').pop();
-    console.log(id)
     try {
         const post = await prismadb.post.findUnique({
             where: { id },
