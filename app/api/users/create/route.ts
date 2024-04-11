@@ -7,8 +7,8 @@ interface UserCreateInput {
     firstName: string;
     lastName: string;
     progress: number;
-    followers: number;
-    following: number;
+    followers: string[];
+    following: string[];
 }
 
 export const POST = async (req: NextRequest) => {
@@ -29,8 +29,8 @@ export const POST = async (req: NextRequest) => {
                 firstName,
                 lastName,
                 progress: 0,
-                followers: 0,
-                following: 0,
+                followers: [],
+                following: [],
         }
 
         console.log(data);

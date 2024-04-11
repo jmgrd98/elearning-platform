@@ -15,6 +15,9 @@ export default authMiddleware({
     '/api/users/edit',
     '/api/users/delete',
     '/api/users',
+    '/api/users/[id]',
+    '/api/users/[id]/follow',
+    '/api/users/[id]/unfollow'
   ],
   publicRoutes: [
     '/',
@@ -29,6 +32,9 @@ export default authMiddleware({
     '/api/users/edit',
     '/api/users/delete',
     '/api/users',
+    '/api/users/[id]',
+    '/api/users/[id]/follow',
+    '/api/users/[id]/unfollow'
   ],
   ignoredRoutes: ["/((?!api|trpc))(_next.*|.+\.[\w]+$)", "/undefined"]
 });

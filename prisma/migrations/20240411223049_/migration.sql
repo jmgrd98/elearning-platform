@@ -1,9 +1,12 @@
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
+    "imageUrl" TEXT NOT NULL,
+    "firstName" TEXT NOT NULL,
+    "lastName" TEXT NOT NULL,
     "progress" INTEGER NOT NULL,
-    "followers" INTEGER NOT NULL,
-    "following" INTEGER NOT NULL,
+    "followers" TEXT[],
+    "following" TEXT[],
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

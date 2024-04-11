@@ -19,8 +19,8 @@ model User {
   firstName String
   lastName String
   progress Int
-  followers Int
-  following Int
+  followers String[]
+  following String[]
   doubts Doubt[]
   posts Post[]
 }
