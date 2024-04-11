@@ -10,7 +10,11 @@ export default authMiddleware({
     '/api/posts/create',
     '/api/posts/edit',
     '/api/posts/delete',
-    'api/posts/like'
+    '/api/posts/like',
+    '/api/users/create',
+    '/api/users/edit',
+    '/api/users/delete',
+    '/api/users',
   ],
   publicRoutes: [
     '/',
@@ -20,7 +24,11 @@ export default authMiddleware({
     "/api/webhooks(.*)",
     '/undefined',
     '/api/posts/create',
-    '/api/posts/like/:id'
+    '/api/posts/like/:id',
+    '/api/users/create',
+    '/api/users/edit',
+    '/api/users/delete',
+    '/api/users',
   ],
   ignoredRoutes: ["/((?!api|trpc))(_next.*|.+\.[\w]+$)", "/undefined"]
 });

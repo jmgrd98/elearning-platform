@@ -37,13 +37,6 @@ const CreatePostForm = () => {
                 tags: tags,
                 likes: 0,
                 likedBy: [],
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                user: {
-                    connect: {
-                        id: user!.id,
-                    },
-                },
             });
             console.log(response);
             toast.success('Post created successfully!');

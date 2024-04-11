@@ -1,23 +1,39 @@
 import prismadb from "@/lib/prismadb";
-import { Doubt, Post } from "@prisma/client";
+import { NextRequest, NextResponse } from "next/server";
 
 interface UserCreateInput {
     id: string;
+    imageUrl: string;
+    firstName: string;
+    lastName: string;
     progress: number;
     followers: number;
     following: number;
 }
 
-export const POST = async (req: any) => {
+export const POST = async (req: NextRequest) => {
     try {
-        const { id } = await req.json();
+        const { userId, imageUrl, firstName, lastName } = await req.json();
         
+        const existingUser = await prismadb.user.findUnique({
+            where: { id: userId },
+        });
+
+        if (existingUser) {
+            return new Response(JSON.stringify({ message: "User already exists." }), { status: 400 });
+        }
+
         const data: UserCreateInput = {
-            id,
-            progress: 0,
-            followers: 0,
-            following: 0,
-        };
+                id: userId,
+                imageUrl,
+                firstName,
+                lastName,
+                progress: 0,
+                followers: 0,
+                following: 0,
+        }
+
+        console.log(data);
 
         const newUser = await prismadb.user.create({
             data,
@@ -28,3 +44,4 @@ export const POST = async (req: any) => {
         return new Response(JSON.stringify(error), { status: 500 });
     }
 }
+

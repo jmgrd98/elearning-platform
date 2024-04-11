@@ -1,4 +1,5 @@
 import prismadb from "@/lib/prismadb";
+import { User } from "@prisma/client";
 
 interface PostCreateInput {
     userId: string;
@@ -14,7 +15,7 @@ interface PostCreateInput {
 
 export const POST = async (req: any) => {
     try {
-        const { userId, content, title, tags, imageUrl } = await req.json();
+        const { userId, imageUrl, title, content, tags } = await req.json();
         
         const data: PostCreateInput = {
             userId,
