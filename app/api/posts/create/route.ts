@@ -2,26 +2,30 @@ import prismadb from "@/lib/prismadb";
 
 interface PostCreateInput {
     userId: string;
-    title: string;
     imageUrl: string;
+    title: string;
     content: string;
     tags: string[];
     likes: number;
+    likedBy: string[];
     createdAt: Date;
+    updatedAt: Date;
 }
 
 export const POST = async (req: any) => {
     try {
-        const { userId, content, title, tags, imageUrl, likes } = await req.json();
+        const { userId, content, title, tags, imageUrl } = await req.json();
         
         const data: PostCreateInput = {
             userId,
-            title,
             imageUrl,
+            title,
             content,
             tags,
-            likes,
-            createdAt: new Date()
+            likes: 0,
+            likedBy: [],
+            createdAt: new Date(),
+            updatedAt: new Date(),
         };
 
         const newPost = await prismadb.post.create({

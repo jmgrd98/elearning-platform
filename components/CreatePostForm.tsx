@@ -36,6 +36,9 @@ const CreatePostForm = () => {
                 content: contentValue,
                 tags: tags,
                 likes: 0,
+                likedBy: [],
+                createdAt: new Date(),
+                updatedAt: new Date(),
                 user: {
                     connect: {
                         id: user!.id,

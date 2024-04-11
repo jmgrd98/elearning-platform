@@ -36,6 +36,7 @@ const PostCard = ({ post, userId }: PostCardProps) => {
 
   const toggleLike = async (e: any) => {
     e.preventDefault();
+    e.stopPropagation();
     try {
       const response = await axios.put(`/api/posts/like/${post.id}`, { userId: user!.id });
       if (response.status === 200) {
@@ -51,19 +52,21 @@ const PostCard = ({ post, userId }: PostCardProps) => {
     }
   };
 
-  const formatDate = (dateString: Date) => {
-    const day = dateString.getDate().toString().padStart(2, "0");
-    const month = (dateString.getMonth() + 1).toString().padStart(2, "0");
-    const year = dateString.getFullYear();
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
+  
 
   const handleCardClick = () => {
-    router.push(`/post/${post.id}`);
+    router.push(`/post/${post.userId}/${post.id}`);
   };
 
   return (
-    <Card onClick={handleCardClick} className="w-full cursor-pointer">
+    <Card onClick={handleCardClick} className="w-full cursor-pointer z-0">
       <CardHeader className="flex items-center gap-5 w-full">
         <Image
           src={post.imageUrl}
@@ -84,7 +87,7 @@ const PostCard = ({ post, userId }: PostCardProps) => {
       </CardContent>
       <CardFooter className="flex justify-between z-10">
         <div className="font-semibold text-sm">
-          {formatDate(post.createdAt)}
+          {formatDate(post.createdAt.toString())}
         </div>
         <div className="flex items-center gap-2">
           {liked ? (

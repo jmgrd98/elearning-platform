@@ -4,27 +4,39 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { Post, User } from '@prisma/client';
 
 const PostPage = () => {
-  const {id} = useParams();
-  const [post, setPost] = useState<any>(null);
+  const { id } = useParams();
+  const [post, setPost] = useState<Post | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    console.log(id)
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`/api/posts/${id}`);
+        const response = await axios.get<Post>(`/api/posts/${id}`);
         setPost(response.data);
       } catch (error) {
         console.error('Error fetching post:', error);
       }
     };
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get<User>(`/api/users/${id}`);
+        setUser(response.data);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+
     if (id) {
       fetchPost();
+      fetchUser();
     }
-  }, []);
+  }, [id]);
 
-  if (!post) {
+  if (!post || !user) {
     return <div>Loading...</div>;
   }
 
@@ -38,7 +50,7 @@ const PostPage = () => {
           height={100}
           className="rounded-full"
         />
-       <p></p>
+        <p>User ID: {user.id}</p>
       </div>
 
       <div className='flex flex-col items-center gap-10'>

@@ -23,9 +23,12 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
+import { useUser } from "@clerk/nextjs";
 
 const Page = () => {
+
+  const {user} = useUser();
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState('');
@@ -89,7 +92,7 @@ const Page = () => {
 
         <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full p-10">
           {posts.map((post: any) => (
-            <PostCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post} userId={user!.id} />
           ))}
         </div>
 

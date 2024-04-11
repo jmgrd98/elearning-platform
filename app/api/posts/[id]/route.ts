@@ -1,6 +1,7 @@
 import prismadb from "@/lib/prismadb";
+import { NextRequest } from "next/server";
 
-export const GET = async (req) => {
+export const GET = async (req: NextRequest) => {
     const url = new URL(req.url);
     const pathname = url.pathname;
     const id = pathname.split('/').pop();
