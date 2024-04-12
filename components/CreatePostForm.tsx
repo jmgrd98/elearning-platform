@@ -41,6 +41,7 @@ const CreatePostForm = ({ onClose }: CreatePostFormProps) => {
                 tags: tags,
                 likes: 0,
                 likedBy: [],
+                comments: []
             });
             console.log(response);
             toast.success('Post created successfully!');

@@ -9,6 +9,7 @@ interface PostCreateInput {
     tags: string[];
     likes: number;
     likedBy: string[];
+    comments: string[];
     createdAt: Date;
     updatedAt: Date;
 }
@@ -25,6 +26,7 @@ export const POST = async (req: any) => {
             tags,
             likes: 0,
             likedBy: [],
+            comments: [],
             createdAt: new Date(),
             updatedAt: new Date(),
         };
