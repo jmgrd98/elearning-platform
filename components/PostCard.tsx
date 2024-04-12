@@ -22,13 +22,12 @@ interface PostCardProps {
   userName: string | undefined;
 }
 
-
 const PostCard = ({ post, userId, userName }: PostCardProps) => {
-
   const { user } = useUser();
   const router = useRouter();
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(post.likes);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const isLiked = post.likedBy.includes(userId);
@@ -60,15 +59,27 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
     const year = date.getFullYear();
     return `${day}/${month}/${year}`;
   };
-  
 
   const handleCardClick = () => {
-    console.log(userId)
     router.push(`/post/${userId}/${post.id}`);
   };
 
+  // Limit content to 100 characters
+  const limitedContent = post.content.length > 100 ? `${post.content.substring(0, 100)}...` : post.content;
+
+  // Search logic
+  const matchesSearch = (
+    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    formatDate(post.createdAt.toString()).includes(searchTerm.toLowerCase()) ||
+    userName?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Only show the post card if it matches the search term
+  if (!matchesSearch) return null;
+
   return (
-    <Card onClick={handleCardClick} className="w-full cursor-pointer z-0">
+    <Card onClick={handleCardClick} className="w-full cursor-pointer z-0 justify-between">
       <CardHeader className="flex items-center gap-5 w-full">
         <Image
           src={post.imageUrl}
@@ -77,10 +88,18 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
           height={50}
           className="rounded-full"
         />
-        <CardTitle>{post.title}</CardTitle>
+        <CardTitle className='text-left'>{post.title}</CardTitle>
       </CardHeader>
       <CardContent className='flex flex-col gap-3'>
-        <p>{post.content}</p>
+        <p>{limitedContent}</p>
+        {post.content.length > 100 && (
+          <span
+            className="text-blue-500 cursor-pointer"
+            onClick={handleCardClick}
+          >
+            Ver Mais
+          </span>
+        )}
         <div className='flex items-center gap-3'>
           {post.tags.map((tag: string) => (
             <Badge key={tag}>{tag}</Badge>
