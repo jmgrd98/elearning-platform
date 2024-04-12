@@ -34,7 +34,7 @@ const CreatePostForm = ({ onClose }: CreatePostFormProps) => {
     const createPost = async () => {
         try {
             const response = await axios.post('/api/posts/create', {
-                userId: user!.id,
+                authorId: user!.id,
                 imageUrl: user!.imageUrl,
                 title: titleValue,
                 content: contentValue,
