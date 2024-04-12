@@ -20,6 +20,7 @@ export const POST = async (req: any) => {
             updatedAt: new Date(),
         };
 
+
         const newDoubt = await prismadb.doubt.create({
             data,
         });

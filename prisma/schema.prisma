@@ -56,16 +56,17 @@ model Doubt {
 
 model Post {
   id        String   @id @default(uuid())
-  userId    String
+  authorId    String
   imageUrl  String
   title     String
   content   String
   tags      String[]
   likes     Int
   likedBy   String[]
+  comments String[]
   createdAt DateTime
   updatedAt DateTime
-  user      User     @relation(fields: [userId], references: [id])
-  @@index([userId])
+  author      User     @relation(fields: [authorId], references: [id])
+  @@index([authorId])
 }
 
