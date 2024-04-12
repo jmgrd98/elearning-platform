@@ -17,6 +17,15 @@ const PostPage = () => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   useEffect(() => {
+    if (user) {
+      console.log('FOLLOWER', user.id)
+    }
+    if (postAuthor) {
+      console.log('POST AUTHOR', postAuthor)
+    }
+  }, [user, postAuthor])
+
+  useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await axios.get<Post>(`/api/posts/${id}`);
@@ -37,19 +46,25 @@ const PostPage = () => {
     };
 
     const checkIfAlreadyFollowing = (author: User) => {
-      setIsFollowing(author.followers.includes(user!.id));
+      if (user) {
+        console.log(user!.id)
+        setIsFollowing(author.followers.includes(user!.id));
+      }
+      console.log(isFollowing)
     };
 
     fetchPost();
     fetchPostAuthor();
-  }, [userId, id]);
+  }, [userId, id, user]);
 
   const followUser = async () => {
+    console.log('FOLLOWER ID', user!.id)
+    console.log('POST AUTHOR ID', postAuthor!.id)
     try {
-      await axios.put(`/api/users/follow/${userId}`, { followerId: postAuthor!.id });
+      await axios.put(`/api/users/follow/${postAuthor!.id}`, { followerId: user!.id });
       setPostAuthor((prevUser: any) => ({
         ...prevUser,
-        followers: [...prevUser!.followers, postAuthor!.id],
+        followers: [...prevUser!.followers, user!.id],
       }));
       setIsFollowing(true);
     } catch (error) {
@@ -58,11 +73,13 @@ const PostPage = () => {
   };
 
   const unfollowUser = async () => {
+    console.log('FOLLOWER ID', user!.id)
+    console.log('POST AUTHOR ID', postAuthor!.id)
     try {
-      await axios.put(`/api/users/unfollow/${userId}`, { followerId: postAuthor!.id});
+      await axios.put(`/api/users/unfollow/${postAuthor!.id}`, { followerId: user!.id});
       setPostAuthor((prevUser: any) => ({
         ...prevUser,
-        followers: prevUser!.followers.filter((id: string) => id !== postAuthor!.id),
+        followers: prevUser!.followers.filter((id: string) => id !== user!.id),
       }));
       setIsFollowing(false);
     } catch (error) {

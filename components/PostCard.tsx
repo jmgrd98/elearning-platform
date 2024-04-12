@@ -18,11 +18,11 @@ import { Post } from "@prisma/client";
 
 interface PostCardProps {
   post: Post;
-  userId: string;
+  postAuthorId: string;
   userName: string | undefined;
 }
 
-const PostCard = ({ post, userId, userName }: PostCardProps) => {
+const PostCard = ({ post, postAuthorId, userName }: PostCardProps) => {
   const { user } = useUser();
   const router = useRouter();
   const [liked, setLiked] = useState(false);
@@ -30,9 +30,14 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const isLiked = post.likedBy.includes(userId);
+    console.log('POST', post);
+    console.log('POST AUTHOR ID', postAuthorId)
+  }, [])
+
+  useEffect(() => {
+    const isLiked = post.likedBy.includes(postAuthorId);
     setLiked(isLiked);
-  }, [post.likedBy, userId]);
+  }, [post.likedBy, postAuthorId]);
 
   const toggleLike = async (e: any) => {
     e.preventDefault();
@@ -61,7 +66,7 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
   };
 
   const handleCardClick = () => {
-    router.push(`/post/${userId}/${post.id}`);
+    router.push(`/post/${postAuthorId}/${post.id}`);
   };
 
   const limitedContent = post.content.length > 100 ? `${post.content.substring(0, 100)}...` : post.content;

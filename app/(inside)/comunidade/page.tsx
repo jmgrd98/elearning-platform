@@ -112,7 +112,7 @@ const Page = () => {
             <PostCard
               key={post.id}
               post={post}
-              userId={user!.id}
+              postAuthorId={user!.id}
               userName={user!.firstName?.replace(/ /g, "-").toLowerCase()}
             />
           ))}
