@@ -98,7 +98,7 @@ const Page = () => {
     if (newDoubtText.trim() !== '') {
       try {
         const response = await axios.post('/api/doubts/create', {
-          userId: user?.id,
+          authorId: user?.id,
           content: newDoubtText,
           lessonId: Number(id)
         });
@@ -196,7 +196,7 @@ const Page = () => {
           <DoubtCard
             key={index}
             doubt={doubt}
-            user={doubtAuthor}
+            authorId={doubt.authorId}
             handleDeleteDoubt={handleDeleteDoubt}
           />
         ))}

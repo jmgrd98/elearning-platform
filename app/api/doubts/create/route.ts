@@ -1,7 +1,7 @@
 import prismadb from "@/lib/prismadb";
 
 interface DoubtCreateInput {
-    userId: string;
+    authorId: string;
     content: string;
     lessonId: number;
     createdAt: Date;
@@ -10,10 +10,10 @@ interface DoubtCreateInput {
 
 export const POST = async (req: any) => {
     try {
-        const { userId, content, lessonId } = await req.json();
+        const { authorId, content, lessonId } = await req.json();
         
         const data: DoubtCreateInput = {
-            userId,
+            authorId,
             content,
             lessonId,
             createdAt: new Date(),
