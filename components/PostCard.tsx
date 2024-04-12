@@ -18,11 +18,9 @@ import { Post } from "@prisma/client";
 
 interface PostCardProps {
   post: Post;
-  postAuthorId: string;
-  userName: string | undefined;
 }
 
-const PostCard = ({ post, postAuthorId, userName }: PostCardProps) => {
+const PostCard = ({ post }: PostCardProps) => {
   const { user } = useUser();
   const router = useRouter();
   const [liked, setLiked] = useState(false);
@@ -30,14 +28,16 @@ const PostCard = ({ post, postAuthorId, userName }: PostCardProps) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    console.log('POST', post);
-    console.log('POST AUTHOR ID', postAuthorId)
+    if (user) {
+      console.log('POST AUTHOR ID', post.authorId)
+      console.log('USER ID', user!.id)
+    }
   }, [])
 
   useEffect(() => {
-    const isLiked = post.likedBy.includes(postAuthorId);
+    const isLiked = post.likedBy.includes(post.authorId);
     setLiked(isLiked);
-  }, [post.likedBy, postAuthorId]);
+  }, [post.likedBy, post.authorId]);
 
   const toggleLike = async (e: any) => {
     e.preventDefault();
@@ -66,16 +66,16 @@ const PostCard = ({ post, postAuthorId, userName }: PostCardProps) => {
   };
 
   const handleCardClick = () => {
-    router.push(`/post/${postAuthorId}/${post.id}`);
+    router.push(`/post/${post.authorId}/${post.id}`);
   };
 
   const limitedContent = post.content.length > 100 ? `${post.content.substring(0, 100)}...` : post.content;
 
   const matchesSearch = (
-    post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    formatDate(post.createdAt.toString()).includes(searchTerm.toLowerCase()) ||
-    userName?.toLowerCase().includes(searchTerm.toLowerCase())
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+    || post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
+    || formatDate(post.createdAt.toString()).includes(searchTerm.toLowerCase())
+    // || userName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   if (!matchesSearch) return null;

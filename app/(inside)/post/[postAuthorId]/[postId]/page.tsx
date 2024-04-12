@@ -11,7 +11,7 @@ import { useUser } from '@clerk/nextjs';
 
 const PostPage = () => {
   const { user } = useUser();
-  const { userId, id } = useParams();
+  const { postAuthorId, postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [postAuthor, setPostAuthor] = useState<User | null>(null);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const PostPage = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get<Post>(`/api/posts/${id}`);
+        const response = await axios.get<Post>(`/api/posts/${postId}`);
         setPost(response.data);
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -37,7 +37,7 @@ const PostPage = () => {
 
     const fetchPostAuthor = async () => {
       try {
-        const response = await axios.get<User>(`/api/users/${userId}`);
+        const response = await axios.get<User>(`/api/users/${postAuthorId}`);
         setPostAuthor(response.data);
         checkIfAlreadyFollowing(response.data);
       } catch (error) {
@@ -55,7 +55,7 @@ const PostPage = () => {
 
     fetchPost();
     fetchPostAuthor();
-  }, [userId, id, user]);
+  }, [postAuthorId, postId, user]);
 
   const followUser = async () => {
     console.log('FOLLOWER ID', user!.id)

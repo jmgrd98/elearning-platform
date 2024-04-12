@@ -26,7 +26,6 @@ import { useUser } from "@clerk/nextjs";
 import { Post } from "@prisma/client";
 
 const Page = () => {
-  const { user } = useUser();
 
   const [posts, setPosts] = useState([]);
   const [inputValue, setInputValue] = useState("");
@@ -47,7 +46,6 @@ const Page = () => {
     fetchPosts();
   }, [dialogOpen]);
 
-  // Function to handle search input change
   const handleInputChange = (e: any) => {
     const searchValue = e.target.value.toLowerCase();
     setInputValue(searchValue);
@@ -112,8 +110,6 @@ const Page = () => {
             <PostCard
               key={post.id}
               post={post}
-              postAuthorId={user!.id}
-              userName={user!.firstName?.replace(/ /g, "-").toLowerCase()}
             />
           ))}
         </div>
