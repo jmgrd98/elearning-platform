@@ -12,16 +12,14 @@ interface PostCreateInput {
     comments: string[];
     createdAt: Date;
     updatedAt: Date;
-    author: User
 }
 
 export const POST = async (req: any) => {
     try {
-        const { authorId, author, imageUrl, title, content, tags } = await req.json();
+        const { authorId, imageUrl, title, content, tags } = await req.json();
         
         const data: PostCreateInput = {
             authorId,
-            author,
             imageUrl,
             title,
             content,
