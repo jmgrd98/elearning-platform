@@ -27,13 +27,12 @@ const DoubtCard = ({ doubt, authorId, handleDeleteDoubt }: DoubtCardProps) => {
       try {
         const response = await axios.get(`/api/users/${authorId}`);
         setDoubtAuthor(response.data);
-        console.log(doubtAuthor)
       } catch (error) {
         console.error(error);
       }
     };
     fetchDoubtAuthor();
-  }, [])
+  }, [authorId]);
 
   const formatDate = (dateString: string) => {
       const date = new Date(dateString);

@@ -33,8 +33,6 @@ export const POST = async (req: NextRequest) => {
                 following: [],
         }
 
-        console.log(data);
-
         const newUser = await prismadb.user.create({
             data,
         });

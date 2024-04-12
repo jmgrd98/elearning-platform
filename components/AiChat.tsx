@@ -1,28 +1,53 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
 import luide from '../public/luide.jpg';
 import Image from "next/image";
 
 const AiChat = () => {
+
     const [inputValue, setInputValue] = useState('');
     const [chatHistory, setChatHistory] = useState<string[]>([]);
     const [displayedMessage, setDisplayedMessage] = useState<string>('');
     const [typingEffectIndex, setTypingEffectIndex] = useState<number>(0);
     const [isLoading, setIsLoading] = useState(false);
 
+    const startTypingEffect = useCallback(() => {
+        if (typingEffectIndex >= chatHistory.length) {
+            return;
+        }
+    
+        let currentIndex = 0;
+        const interval = setInterval(() => {
+            const currentMessage = chatHistory[typingEffectIndex];
+            if (!currentMessage) {
+                clearInterval(interval);
+                setTypingEffectIndex(prevIndex => prevIndex + 1);
+                return;
+            }
+    
+            if (currentIndex <= currentMessage.length) {
+                setDisplayedMessage(currentMessage.slice(0, currentIndex));
+                currentIndex++;
+            } else {
+                clearInterval(interval);
+                setTypingEffectIndex(prevIndex => prevIndex + 1);
+            }
+        }, 20);
+    }, [typingEffectIndex, chatHistory]);
+
     useEffect(() => {
         setDisplayedMessage('Fala creator! Aqui é o Luide, em que posso ajudar?');
         startTypingEffect();
-    }, [])
+    }, [startTypingEffect]);
 
     useEffect(() => {
         if (typingEffectIndex < chatHistory.length) {
             startTypingEffect();
         }
-    }, [chatHistory, typingEffectIndex]);
+    }, [chatHistory, typingEffectIndex, startTypingEffect]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -75,31 +100,6 @@ const AiChat = () => {
             setIsLoading(false);
         }
     };
-
-    const startTypingEffect = () => {
-        if (typingEffectIndex >= chatHistory.length) {
-            return;
-        }
-    
-        let currentIndex = 0;
-        const interval = setInterval(() => {
-            const currentMessage = chatHistory[typingEffectIndex];
-            if (!currentMessage) {
-                clearInterval(interval);
-                setTypingEffectIndex(prevIndex => prevIndex + 1);
-                return;
-            }
-    
-            if (currentIndex <= currentMessage.length) {
-                setDisplayedMessage(currentMessage.slice(0, currentIndex));
-                currentIndex++;
-            } else {
-                clearInterval(interval);
-                setTypingEffectIndex(prevIndex => prevIndex + 1);
-            }
-        }, 20);
-    };
-    
 
     return (
         <div className='w-full h-screen max-h-[330px] flex flex-col justify-between '>

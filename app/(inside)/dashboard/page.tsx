@@ -3,7 +3,7 @@
 import { Progress } from '../../../components/ui/progress';
 import { Button } from "@/components/ui/button";
 import { useUserProgress } from "../../../context/ProgressContext";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useUser, useAuth } from '@clerk/nextjs';
 import {
   Carousel,
@@ -22,55 +22,53 @@ export default function Home() {
   const [videoIds, setVideoIds] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchData = useCallback(async () => {
+    const options = {
+      method: 'GET',
+      url: 'https://yt-api.p.rapidapi.com/search',
+      params: {query: 'luide%20comunismo'},
+      headers: {
+        'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
+        'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
+      }
+    };
+    try {
+      const response = await axios.request(options);
+      const data = response.data.data;
+      const firstThreeVideos = data.slice(0, 3);
+      const videoIds = firstThreeVideos.map((item: any) => item.videoId);
+      setVideoIds(videoIds); 
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
   useEffect(() => {
     if (userId && user) {
+      const createUser = async () => {
+        try {
+          setLoading(true);
+          const { firstName, lastName, imageUrl } = user || {};
+          const response = await axios.post('/api/users/create', {userId, imageUrl, firstName, lastName});
+          console.log(response);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
+      };
       createUser();
     }
   }, [userId, user]);
 
-  const createUser = async () => {
-    try {
-      setLoading(true);
-      const { firstName, lastName, imageUrl } = user || {};
-      const response = await axios.post('/api/users/create', {userId, imageUrl, firstName, lastName});
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
     const timer = setTimeout(() => setProgress(0), 500);
     return () => clearTimeout(timer);
-  }, []);
+  }, [setProgress]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const options = {
-        method: 'GET',
-        url: 'https://yt-api.p.rapidapi.com/search',
-        params: {query: 'luide%20comunismo'},
-        headers: {
-          'X-RapidAPI-Key': process.env.X_RAPIDAPI_KEY,
-          'X-RapidAPI-Host': process.env.X_RAPIDAPI_HOST
-        }
-      };
-      try {
-        // const response = await axios.get(`https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=luide%20comunismo&key=${process.env.YOUTUBE_API_KEY}`);
-        const response = await axios.request(options);
-        const data = response.data.data;
-        const firstThreeVideos = data.slice(0, 3);
-        const videoIds = firstThreeVideos.map((item: any) => item.videoId);
-        setVideoIds(videoIds); 
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const handleVideoEnd = () => {
     setProgress((prevProgress: number) => prevProgress + 33);

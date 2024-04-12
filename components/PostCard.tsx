@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import axios from "axios";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useUser } from "@clerk/nextjs";
@@ -27,10 +27,14 @@ const PostCard = ({ post }: PostCardProps) => {
   const [likes, setLikes] = useState(post.likes);
   const [searchTerm, setSearchTerm] = useState('');
   
-  useEffect(() => {
+  useLayoutEffect(() => {
     const isLiked = post.likedBy.includes(post.authorId);
     setLiked(isLiked);
   }, [post.likedBy, post.authorId]);
+
+  useLayoutEffect(() => {
+    setSearchTerm('');
+  }, [post]);
 
   const toggleLike = async (e: any) => {
     e.preventDefault();

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
+import { HydrationProvider, Server, Client } from 'react-hydration-provider';
 
 export const metadata: Metadata = {
   title: "Formando Creators",

@@ -38,19 +38,15 @@ const PostPage = () => {
 
     const checkIfAlreadyFollowing = (author: User) => {
       if (user) {
-        console.log(user!.id)
         setIsFollowing(author.followers.includes(user!.id));
       }
-      console.log(isFollowing)
     };
 
     fetchPost();
     fetchPostAuthor();
-  }, [postAuthorId, postId, user]);
+  }, [postAuthorId, postId, user, isFollowing]);
 
   const followUser = async () => {
-    console.log('FOLLOWER ID', user!.id)
-    console.log('POST AUTHOR ID', postAuthor!.id)
     try {
       await axios.put(`/api/users/follow/${postAuthor!.id}`, { followerId: user!.id });
       setPostAuthor((prevUser: any) => ({
@@ -64,8 +60,6 @@ const PostPage = () => {
   };
 
   const unfollowUser = async () => {
-    console.log('FOLLOWER ID', user!.id)
-    console.log('POST AUTHOR ID', postAuthor!.id)
     try {
       await axios.put(`/api/users/unfollow/${postAuthor!.id}`, { followerId: user!.id});
       setPostAuthor((prevUser: any) => ({
