@@ -196,7 +196,7 @@ const Page = () => {
           <DoubtCard
             key={index}
             doubt={doubt}
-            user={user}
+            user={doubtAuthor}
             handleDeleteDoubt={handleDeleteDoubt}
           />
         ))}
