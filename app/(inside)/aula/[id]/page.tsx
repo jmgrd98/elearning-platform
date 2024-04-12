@@ -100,7 +100,7 @@ const Page = () => {
         const response = await axios.post('/api/doubts/create', {
           userId: user?.id,
           content: newDoubtText,
-          lessonId: id
+          lessonId: Number(id)
         });
         const newDoubt = response.data;
         setDuvidas([...duvidas, newDoubt]);

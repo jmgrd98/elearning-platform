@@ -20,10 +20,14 @@ export const POST = async (req: any) => {
             updatedAt: new Date(),
         };
 
+        console.log(data)
+
 
         const newDoubt = await prismadb.doubt.create({
             data,
         });
+
+        // console.log(newDoubt)
 
         return new Response(JSON.stringify(newDoubt), { status: 201 });
     } catch (error) {
