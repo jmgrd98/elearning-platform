@@ -22,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import CreatePostForm from "@/components/CreatePostForm";
-import { useUser } from "@clerk/nextjs";
 import { Post } from "@prisma/client";
 
 const Page = () => {

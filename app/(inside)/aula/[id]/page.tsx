@@ -37,7 +37,7 @@ const Page = () => {
   const { progress, setProgress } = useUserProgress();
   const router = useRouter();
 
-  const [duvidas, setDuvidas] = useState<any[]>([]);
+  const [doubts, setDoubts] = useState<Doubt[]>([]);
   const [newDoubtText, setNewDoubtText] = useState<string>('');
   const [videoId, setVideoId] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -46,10 +46,8 @@ const Page = () => {
   useEffect(() => {
     try {
       axios.get('/api/doubts').then((response) => {
-        console.log(response.data)
-        const filteredDuvidas = response.data.filter((doubt: any) => doubt.lessonId == id);
-        setDuvidas(filteredDuvidas);
-        console.log(duvidas)
+        const filteredDoubts = response.data.filter((doubt: any) => doubt.lessonId == id);
+        setDoubts(filteredDoubts);
       });
     } catch (error) {
       console.error(error);
@@ -105,7 +103,7 @@ const Page = () => {
           lessonId: Number(id)
         });
         const newDoubt = response.data;
-        setDuvidas([...duvidas, newDoubt]);
+        setDoubts([...doubts, newDoubt]);
         toast.success('Obrigado por compartilhar sua dúvida!');
         setTimeout(() => {
           toast.success('O professor irá responder assim que possível. 😉');
@@ -123,7 +121,7 @@ const Page = () => {
   const handleDeleteDoubt = async (doubtId: string) => {
     try {
       await axios.delete(`/api/doubts/delete/${doubtId}`);
-      setDuvidas(duvidas.filter((doubt: any) => doubt.id !== doubtId));
+      setDoubts(doubts.filter((doubt: any) => doubt.id !== doubtId));
     } catch (error) {
       console.error(error);
     }
@@ -194,7 +192,7 @@ const Page = () => {
       <div className='flex flex-col gap-5 mt-5'>
         <p className='text-xl font-bold'>Tem alguma dúvida sobre essa aula? Compartilhe conosco e iremos te ajudar!</p>
 
-        {duvidas.map((doubt: Doubt, index: number) => (
+        {doubts.map((doubt: Doubt, index: number) => (
           <DoubtCard
             key={index}
             doubt={doubt}

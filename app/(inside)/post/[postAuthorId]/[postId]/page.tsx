@@ -17,15 +17,6 @@ const PostPage = () => {
   const [isFollowing, setIsFollowing] = useState<boolean>(false);
 
   useEffect(() => {
-    if (user) {
-      console.log('FOLLOWER', user.id)
-    }
-    if (postAuthor) {
-      console.log('POST AUTHOR', postAuthor)
-    }
-  }, [user, postAuthor])
-
-  useEffect(() => {
     const fetchPost = async () => {
       try {
         const response = await axios.get<Post>(`/api/posts/${postId}`);

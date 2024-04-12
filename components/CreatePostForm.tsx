@@ -122,6 +122,19 @@ const CreatePostForm = ({ onClose }: CreatePostFormProps) => {
         >
         Enviar
         </Button>
+
+        <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={true}
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={true}
+                pauseOnHover={true}
+                className={'z-0'}
+            />
     </form>
   )
 }
