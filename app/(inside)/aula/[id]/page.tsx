@@ -5,10 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { useEffect, useState } from 'react';
 import Youtube from 'react-youtube';
 import { useUser } from '@clerk/nextjs';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { IoIosCloseCircle } from "react-icons/io";
 import axios from 'axios';
 import { useParams } from 'next/navigation';
 import { useUserProgress } from '@/context/ProgressContext';
@@ -30,6 +28,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import DoubtCard from '@/components/DoubtCard';
+import { Doubt } from '@prisma/client';
 
 const Page = () => {
   const {user} = useUser();
@@ -46,8 +46,10 @@ const Page = () => {
   useEffect(() => {
     try {
       axios.get('/api/doubts').then((response) => {
-        const filteredDuvidas = response.data.filter((duvida: any) => duvida.aulaId === id);
+        console.log(response.data)
+        const filteredDuvidas = response.data.filter((doubt: any) => doubt.lessonId == id);
         setDuvidas(filteredDuvidas);
+        console.log(duvidas)
       });
     } catch (error) {
       console.error(error);
@@ -192,24 +194,15 @@ const Page = () => {
       <div className='flex flex-col gap-5 mt-5'>
         <p className='text-xl font-bold'>Tem alguma dúvida sobre essa aula? Compartilhe conosco e iremos te ajudar!</p>
 
-        {duvidas.map((duvida: any, index: number) => (
-          <div key={index} className="bg-black/20 p-2 rounded-md flex items-center gap-5">
-            <Avatar>
-              <AvatarImage src={user?.imageUrl} />
-              <AvatarFallback>
-                {user?.firstName?.charAt(0)}
-                {user?.lastName?.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
-            <div className='flex flex-col text-left gap-3 w-full'>
-              <div className='flex items-center justify-between'>
-                <p className='font-bold'>{user?.firstName} {user?.lastName}</p>
-                <IoIosCloseCircle onClick={() => handleDeleteDoubt(duvida.id)} className='text-red-500/80 hover:text-red-500 cursor-pointer w-[25px] h-[25px]' />
-              </div>
-              <p className='p-2 rounded'>{duvida.content}</p>
-            </div>
-          </div>
+        {duvidas.map((doubt: Doubt, index: number) => (
+          <DoubtCard
+            key={index}
+            doubt={doubt}
+            user={user}
+            handleDeleteDoubt={handleDeleteDoubt}
+          />
         ))}
+
 
         <Textarea
           value={newDoubtText}

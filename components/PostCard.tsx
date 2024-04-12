@@ -64,10 +64,8 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
     router.push(`/post/${userId}/${post.id}`);
   };
 
-  // Limit content to 100 characters
   const limitedContent = post.content.length > 100 ? `${post.content.substring(0, 100)}...` : post.content;
 
-  // Search logic
   const matchesSearch = (
     post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase())) ||
@@ -75,7 +73,6 @@ const PostCard = ({ post, userId, userName }: PostCardProps) => {
     userName?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Only show the post card if it matches the search term
   if (!matchesSearch) return null;
 
   return (
