@@ -33,18 +33,22 @@ const Page = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("/api/posts");
-        setPosts(response.data);
-        setFilteredPosts(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchPosts();
-  }, [dialogOpen]);
+  }, []);
+
+  useEffect(() => {
+    fetchPosts();
+  }, [dialogOpen])
+
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("/api/posts");
+      setPosts(response.data);
+      setFilteredPosts(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleInputChange = (e: any) => {
     const searchValue = e.target.value.toLowerCase();

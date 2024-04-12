@@ -26,14 +26,7 @@ const PostCard = ({ post }: PostCardProps) => {
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(post.likes);
   const [searchTerm, setSearchTerm] = useState('');
-
-  useEffect(() => {
-    if (user) {
-      console.log('POST AUTHOR ID', post.authorId)
-      console.log('USER ID', user!.id)
-    }
-  }, [])
-
+  
   useEffect(() => {
     const isLiked = post.likedBy.includes(post.authorId);
     setLiked(isLiked);
