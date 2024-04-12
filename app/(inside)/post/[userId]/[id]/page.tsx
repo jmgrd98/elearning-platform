@@ -105,8 +105,15 @@ const PostPage = () => {
         )}
       </div>
 
-      <div className='flex flex-col items-center gap-10'>
+      <div className='flex flex-col items-center gap-8'>
         <h1 className='font-bold text-5xl'>{post.title}</h1>
+        <div className='flex items-left text-left self-start gap-5'>
+          {post.tags.map((tag: string) => (
+            <div key={tag}>
+              <Badge variant={'secondary'}># {tag}</Badge>
+            </div>
+          ))}
+        </div>
         <p>{post.content}</p>
       </div>
     </div>
