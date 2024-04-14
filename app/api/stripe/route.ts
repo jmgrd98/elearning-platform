@@ -39,7 +39,7 @@ export async function GET() {
             payment_method_types: ['card', 'boleto',],
             mode: 'subscription',
             billing_address_collection: 'auto',
-            customer_email: user!.emailAddresses[0].emailAddress,
+            // customer_email: user!.emailAddresses[0].emailAddress,
             line_items: [
                 {
                     price_data: {
@@ -56,9 +56,9 @@ export async function GET() {
                     quantity: 1
                 }
             ],
-            metadata: {
-                userId
-            }
+            // metadata: {
+            //     userId
+            // }
         });
 
         return new NextResponse(JSON.stringify({ url: stripeSession.url }));
