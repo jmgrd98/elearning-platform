@@ -24,17 +24,19 @@ export async function GET() {
         if (userSubscription && userSubscription.stripeCustomerId) {
             const stripeSession = await stripe.billingPortal.sessions.create({
                 customer: userSubscription.stripeCustomerId,
-                // return_url: process.env.NEXT_PUBLIC_APP_URL
-                return_url: 'http://localhost:3000/dashboard'
+                return_url: process.env.NEXT_PUBLIC_APP_URL
+                // return_url: 'http://localhost:3000/dashboard'
             });
 
             return new NextResponse(JSON.stringify({ url: stripeSession.url }));
         }
 
         const stripeSession = await stripe.checkout.sessions.create({
-            success_url: 'http://localhost:3000/dashboard',
-            cancel_url: 'http://localhost:3000',
-            payment_method_types: ['card', 'boleto', 'paypal'],
+            // success_url: 'http://localhost:3000/dashboard',
+            success_url: `${process.env.NEXT_PUBLIC_APP_URL}dashboard`,
+            // cancel_url: 'http://localhost:3000',
+            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+            payment_method_types: ['card', 'boleto',],
             mode: 'subscription',
             billing_address_collection: 'auto',
             customer_email: user!.emailAddresses[0].emailAddress,
