@@ -15,21 +15,21 @@ export async function GET() {
         //     return new NextResponse('Unauthorized', { status: 401 })
         // }
 
-        const userSubscription = await prismadb.userSubscription.findUnique({
-            where: {
-                userId
-            }
-        });
+        // const userSubscription = await prismadb.userSubscription.findUnique({
+        //     where: {
+        //         userId
+        //     }
+        // });
 
-        if (userSubscription && userSubscription.stripeCustomerId) {
-            const stripeSession = await stripe.billingPortal.sessions.create({
-                customer: userSubscription.stripeCustomerId,
-                return_url: process.env.NEXT_PUBLIC_APP_URL
-                // return_url: 'http://localhost:3000/dashboard'
-            });
+        // if (userSubscription && userSubscription.stripeCustomerId) {
+        //     const stripeSession = await stripe.billingPortal.sessions.create({
+        //         customer: userSubscription.stripeCustomerId,
+        //         return_url: process.env.NEXT_PUBLIC_APP_URL
+        //         // return_url: 'http://localhost:3000/dashboard'
+        //     });
 
-            return new NextResponse(JSON.stringify({ url: stripeSession.url }));
-        }
+        //     return new NextResponse(JSON.stringify({ url: stripeSession.url }));
+        // }
 
         const stripeSession = await stripe.checkout.sessions.create({
             // success_url: 'http://localhost:3000/dashboard',
