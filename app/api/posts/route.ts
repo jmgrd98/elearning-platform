@@ -1,5 +1,6 @@
 import prismadb from "@/lib/prismadb";
 
+export const dynamic = 'force-dynamic';
 export const GET = async () => {
     try {
         const posts = await prismadb.post.findMany();
