@@ -80,7 +80,7 @@ const Page = () => {
               <DialogTitle className="text-xl font-bold mb-5">
                 Criar post
               </DialogTitle>
-              <CreatePostForm onClose={() => setDialogOpen(false)} />
+              <CreatePostForm onClose={() => {setDialogOpen(false); fetchPosts()}} />
             </DialogHeader>
           </DialogContent>
         </Dialog>
