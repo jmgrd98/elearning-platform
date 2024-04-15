@@ -19,11 +19,11 @@ const LandingHeader = () => {
     <div className='flex items-center justify-between h-20 p-3 bg-black'>
       <Logo width={100} height={100} />
 
-      <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
+      {/* <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
             <Button variant={'secondary'} >
                 Acessar
             </Button>
-        </Link>
+        </Link> */}
     </div>
   )
 }
