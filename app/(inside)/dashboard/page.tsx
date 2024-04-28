@@ -61,14 +61,14 @@ export default function Home() {
     }
   }, [userId, user]);
 
-  useEffect(() => {
-    const timer = setTimeout(() => setProgress(0), 500);
-    return () => clearTimeout(timer);
-  }, [setProgress]);
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setProgress(0), 500);
+  //   return () => clearTimeout(timer);
+  // }, [setProgress]);
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const handleVideoEnd = () => {
     setProgress((prevProgress: number) => prevProgress + 33);
