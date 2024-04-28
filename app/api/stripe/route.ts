@@ -32,11 +32,11 @@ export async function GET() {
         // }
 
         const stripeSession = await stripe.checkout.sessions.create({
-            // success_url: 'http://localhost:3000/dashboard',
+            success_url: 'http://localhost:3000/sign-in',
             // success_url: `${process.env.NEXT_PUBLIC_APP_URL}dashboard`,
-            success_url: `${process.env.NEXT_PUBLIC_APP_URL}sign-in`,
-            // cancel_url: 'http://localhost:3000',
-            cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
+            // success_url: `${process.env.NEXT_PUBLIC_APP_URL}sign-in`,
+            cancel_url: 'http://localhost:3000',
+            // cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}`,
             payment_method_types: ['card', 'boleto',],
             mode: 'subscription',
             billing_address_collection: 'auto',

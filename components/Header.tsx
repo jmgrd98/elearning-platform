@@ -155,6 +155,12 @@ const Header = () => {
           </Button>
         </Link>
 
+        <Link href={'/quiz'}>
+          <Button className="font-semibold p-2 bg-transparent border border-white rounded text-white hover:bg-white hover:text-black">
+            Quizes
+          </Button>
+        </Link>
+
         <Link href={'/comunidade'}>
           <Button  className="font-semibold p-2 bg-transparent border border-white rounded text-white hover:bg-white hover:text-black">
             Comunidade
@@ -165,10 +171,6 @@ const Header = () => {
 
         <div className='flex items-center gap-5'>
           <UserButton afterSignOutUrl="/"/>
-        
-          {/* <div className='bg-white rounded p-2 font-bold'>
-            <SignOutButton signOutCallback={() => router.push('/')} />
-          </div> */}
         </div>
       </div>
     </>
