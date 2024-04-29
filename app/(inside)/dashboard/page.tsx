@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import axios from 'axios';
 import YouTube from 'react-youtube';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Home() {
   const { user } = useUser();
@@ -41,7 +42,12 @@ export default function Home() {
     } catch (error) {
       console.error(error);
     }
-  }, []);
+  }, [videoIds]);
+  
+  const {} = useQuery({
+    queryKey: ['videos'],
+    queryFn: fetchData,
+  })
 
   useEffect(() => {
     if (userId && user) {

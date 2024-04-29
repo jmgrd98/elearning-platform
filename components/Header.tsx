@@ -26,14 +26,11 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { useUser } from "@clerk/nextjs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { UserButton } from "@clerk/nextjs";
-import { useClerk } from "@clerk/nextjs";
-import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
 
 const Header = () => {
   const router = useRouter();
   const { user } = useUser();
-  const { signOut } = useClerk();
   const [loading, setLoading] = useState(false);
 
   const handleLinkClick = (href: string) => {
