@@ -67,11 +67,6 @@ export default function Home() {
     }
   }, [userId, user]);
 
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setProgress(0), 500);
-  //   return () => clearTimeout(timer);
-  // }, [setProgress]);
-
   useEffect(() => {
     fetchData();
   }, []);
