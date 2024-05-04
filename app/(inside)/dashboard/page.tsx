@@ -42,12 +42,12 @@ export default function Home() {
     } catch (error) {
       console.error(error);
     }
-  }, [videoIds]);
+  }, []);
   
-  const {} = useQuery({
-    queryKey: ['videos'],
-    queryFn: fetchData,
-  })
+  // const {} = useQuery({
+  //   queryKey: ['videos'],
+  //   queryFn: fetchData,
+  // })
 
   useEffect(() => {
     if (userId && user) {

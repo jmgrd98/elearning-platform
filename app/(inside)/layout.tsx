@@ -10,13 +10,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <QueryClientProvider client={queryClient}>
+    // <QueryClientProvider client={queryClient}>
       <UserProgressProvider>
         <main className="w-full flex flex-col">
           <Header/>
           {children}
         </main>
       </UserProgressProvider>
-    </QueryClientProvider>
+    // </QueryClientProvider>
   );
 }
