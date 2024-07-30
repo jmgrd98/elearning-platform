@@ -4,7 +4,7 @@ import {useEffect, useState} from 'react'
 import { Button } from '@/components/ui/button'
 import axios from 'axios';
 
-const page = () => {
+const Quiz = () => {
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,4 +34,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Quiz
