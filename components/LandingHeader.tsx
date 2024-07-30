@@ -20,6 +20,7 @@ const LandingHeader = () => {
       <Logo width={100} height={100} />
 
       <Link href={isSignedIn ? '/dashboard' : '/sign-up'}>
+      
             <Button variant={'secondary'} >
                 Acessar
             </Button>
